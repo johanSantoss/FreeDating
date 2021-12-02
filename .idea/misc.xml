@@ -4,22 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.22407407407407406" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable-v21/ic_menu_gallery.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable-v21/ic_menu_slideshow.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_baseline_account_circle_24.xml" value="0.20092592592592592" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_baseline_circle_24.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_baseline_lock_24.xml" value="0.20092592592592592" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_exit.xml" value="0.20092592592592592" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_mail_box.xml" value="0.20092592592592592" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_preferences.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_profiles.xml" value="0.20092592592592592" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_user.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/ic_menu_warning.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/drawable/side_nav_bar.xml" value="0.2703125" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/layout/fragment_login.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/layout/fragment_register.xml" value="0.2" />
-        <entry key="..\:/Users/Jordi/AndroidStudioProjects/FreeDating/app/src/main/res/layout/login_fragment.xml" value="0.25416666666666665" />
+        <entry key="..\:/Cole/CFGS-DAM/M13/Exercicis/FreeDating/app/src/main/res/layout/fragment_login.xml" value="0.371875" />
+        <entry key="..\:/Cole/CFGS-DAM/M13/Exercicis/FreeDating/app/src/main/res/layout/fragment_register.xml" value="0.371875" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_camera.xml" value="0.28020833333333334" />
         <entry key="app/src/main/res/drawable-v21/ic_menu_slideshow.xml" value="0.23958333333333334" />
         <entry key="app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.26614583333333336" />

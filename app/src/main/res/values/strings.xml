@@ -42,4 +42,11 @@
     <string name="title_activity_tab">TabActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <!-- Sync contents -->
+    <string name="emailRegister">Inserir un email…</string>
+    <string name="passwordRegister">Password…</string>
+    <string name="clearRegister">Clear Text</string>
+    <string name="register">Registra</string>
+
 </resources>

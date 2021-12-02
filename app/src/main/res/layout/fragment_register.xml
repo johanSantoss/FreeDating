@@ -5,43 +5,95 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.register.Register" >
+    tools:context=".ui.register.Register">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="411dp"
+        android:layout_height="100dp"
+        android:src="@drawable/logo_free_dating"
+        app:flow_horizontalAlign="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/editTextEmailRegister"
+        android:layout_width="210dp"
+        android:layout_height="45dp"
         android:ems="10"
+        android:hint="@string/emailRegister"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="156dp"
-        tools:layout_editor_absoluteY="425dp" />
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.37"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <EditText
         android:id="@+id/editTextTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="@string/passwordRegister"
         android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextEmailAddress2"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextEmailAddress2"
-        tools:layout_editor_absoluteY="510dp" />
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextEmailRegister"
+        app:layout_constraintStart_toStartOf="@+id/editTextEmailRegister"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister" />
+
+    <Button
+        android:id="@+id/btnNewRegister"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/register"
+        app:layout_constraintEnd_toStartOf="@+id/btnClear"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnClear" />
+
+    <Button
+        android:id="@+id/btnClear"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/clearRegister"
+        app:layout_constraintEnd_toStartOf="@+id/btnCancel"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnNewRegister"
+        app:layout_constraintTop_toTopOf="@+id/btnCancel" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:text="@android:string/cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnClear"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintVertical_bias="0.90" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
-        android:layout_height="175dp"
-        android:src="@drawable/logo_free_dating"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_account_circle_24"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextEmailRegister"
+        app:layout_constraintEnd_toStartOf="@+id/editTextEmailRegister"
+        app:layout_constraintTop_toTopOf="@+id/editTextEmailRegister" />
 
-    <Button
-        android:id="@+id/button"
+    <ImageView
+        android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_baseline_account_circle_24"
-        android:text="Button"
-        tools:layout_editor_absoluteX="47dp"
-        tools:layout_editor_absoluteY="425dp" />
-
+        android:src="@drawable/ic_baseline_lock_24"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword"
+        app:layout_constraintEnd_toStartOf="@+id/editTextTextPassword"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailRegister" />
 </androidx.constraintlayout.widget.ConstraintLayout>
