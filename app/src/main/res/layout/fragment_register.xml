@@ -30,7 +30,7 @@
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="175dp"
-        android:src="@drawable/logoFreeDating"
+        android:src="@drawable/logo_free_dating"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
