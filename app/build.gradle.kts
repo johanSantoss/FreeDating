@@ -77,7 +77,7 @@ dependencies {
     // RxJava2
     implementation("io.reactivex.rxjava2:rxjava:$rxJavaVersion")
     implementation("io.reactivex.rxjava2:rxandroid:$rxJavaVersion")
-    implementation("com.google.firebase:firebase-auth-ktx:20.0.4")
+    implementation("com.google.firebase:firebase-auth-ktx:21.0.1")
     implementation("com.google.firebase:firebase-auth:21.0.1")
     // Tests
     testImplementation("junit:junit:4.13.2")
@@ -86,7 +86,7 @@ dependencies {
 //    // BoM Bill of Material to avoid specifying individual library versions
 //    implementation(platform("com.google.firebase:firebase-bom:29.0.0"))
 //    // Firebase Authentication
-//    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
 //    // Firebase Analytics: Usage metrics
 //    implementation("com.google.firebase:firebase-analytics-ktx")
 //    // Firebase Database: Realtime db
