@@ -48,5 +48,6 @@
     <string name="passwordRegister">Password…</string>
     <string name="clearRegister">Clear Text</string>
     <string name="register">Registra</string>
+    <string name="loginButton">INICIAR  SESIÓN</string>
 
 </resources>

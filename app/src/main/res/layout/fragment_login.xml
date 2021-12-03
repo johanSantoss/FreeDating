@@ -12,33 +12,35 @@
         android:layout_width="333dp"
         android:layout_height="154dp"
         android:src="@drawable/logo_free_dating"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/editTextMailAuth"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/editTextTextEmailAddress"
+        android:id="@+id/editTextMailAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/emailRegister"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPassword2"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPassword2"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassAuth"
+        app:layout_constraintEnd_toEndOf="@+id/editTextPassAuth"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPassword2" />
+        app:layout_constraintStart_toStartOf="@+id/editTextPassAuth" />
 
     <EditText
-        android:id="@+id/editTextTextPassword2"
+        android:id="@+id/editTextPassAuth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/passwordRegister"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnAuthetification"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.499"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,9 +53,9 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:src="@drawable/ic_baseline_lock_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextPassword2"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextPassword2"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextPassword2"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextPassAuth"
+        app:layout_constraintEnd_toStartOf="@+id/editTextPassAuth"
+        app:layout_constraintTop_toTopOf="@+id/editTextPassAuth"
         app:layout_constraintVertical_bias="0.476" />
 
     <ImageView
@@ -62,19 +64,19 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="28dp"
         android:src="@drawable/ic_baseline_account_circle_24"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintEnd_toStartOf="@+id/editTextTextEmailAddress"
-        app:layout_constraintTop_toTopOf="@+id/editTextTextEmailAddress"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextMailAuth"
+        app:layout_constraintEnd_toStartOf="@+id/editTextMailAuth"
+        app:layout_constraintTop_toTopOf="@+id/editTextMailAuth"
         app:layout_constraintVertical_bias="0.571" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnAuthetification"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:backgroundTint="#A50F0F"
-        android:text="INICIAR  SESIÓN"
+        android:backgroundTint="@color/buttonColor"
+        android:text="@string/loginButton"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
