@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.FragmentGalleryBinding
+
 
 class GalleryFragment : Fragment() {
 
@@ -38,8 +41,20 @@ class GalleryFragment : Fragment() {
             textView.text = it
         })
 
+//        val score: Int = LoginArgs.fromBundle(requireArguments()).score
+
         return root
     }
+
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        super.onViewCreated(view, savedInstanceState)
+//        val safeArgs: LoginArgs by navArgs()
+//        val nom = safeArgs.nom
+//        Toast.makeText(requireContext(), "Hola  $nom", Toast.LENGTH_SHORT).show()
+//        binding.textGallery.text = nom
+//
+////        viewModel = ViewModelProvider(this).get(FirstViewModel::class.java)
+//    }
 
     override fun onDestroyView() {
         super.onDestroyView()

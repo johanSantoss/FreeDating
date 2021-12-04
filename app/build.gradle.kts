@@ -3,7 +3,8 @@ plugins {
     id("kotlin-android")
     id("kotlin-kapt")
     id("com.google.gms.google-services")
-//    id("androidx.navigation.safeargs")
+    id("androidx.navigation.safeargs")
+
 }
 
 val supportVersion by extra ("28.0.0")
@@ -61,6 +62,9 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
     implementation("androidx.lifecycle:lifecycle-common-java8:2.4.0")
+    //Navigation dependecies
+    implementation ("androidx.navigation:navigation-fragment-ktx:2.3.5")
+    implementation ("androidx.navigation:navigation-ui-ktx:2.3.5")
     // Room: Local database API
     implementation("androidx.room:room-runtime:$roomVersion")
 //    kapt("androidx.room:room-compiler:$roomVersion")
@@ -86,7 +90,8 @@ dependencies {
 //    // BoM Bill of Material to avoid specifying individual library versions
 //    implementation(platform("com.google.firebase:firebase-bom:29.0.0"))
 //    // Firebase Authentication
-    implementation("com.google.firebase:firebase-auth-ktx")
+//    implementation("com.google.firebase:firebase-auth-ktx")
+      implementation ("com.google.firebase:firebase-auth-ktx:21.0.1")
 //    // Firebase Analytics: Usage metrics
 //    implementation("com.google.firebase:firebase-analytics-ktx")
 //    // Firebase Database: Realtime db
