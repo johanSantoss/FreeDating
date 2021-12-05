@@ -25,8 +25,9 @@ import androidx.navigation.fragment.findNavController
 class Login : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentLoginBinding
-
     private lateinit var viewModel: LoginViewModel
+    private lateinit var email : String
+    private lateinit var pass  : String
 
     companion object {
         fun newInstance() = Login()
@@ -54,8 +55,8 @@ class Login : Fragment() {
 
         binding.btnAuthetification.setOnClickListener {
 
-            var email = binding.editTextMailAuth.text.toString()
-            var pass = binding.editTextPassAuth.text.toString()
+            email = binding.editTextMailAuth.text.toString()
+            pass = binding.editTextPassAuth.text.toString()
             signIn( email.trim(), pass.trim())
 
 //            val action = LoginDirections.actionLoginToNavGallery2()
