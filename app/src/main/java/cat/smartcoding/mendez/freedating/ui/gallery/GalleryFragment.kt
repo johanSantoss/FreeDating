@@ -41,7 +41,9 @@ class GalleryFragment : Fragment() {
             textView.text = it
         })
 
-//        val score: Int = LoginArgs.fromBundle(requireArguments()).score
+       val email: String = GalleryFragmentArgs.fromBundle(requireArguments()).email
+
+        galleryViewModel.setEmail(email)
 
         return root
     }

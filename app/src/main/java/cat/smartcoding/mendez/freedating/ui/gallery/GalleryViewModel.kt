@@ -10,4 +10,7 @@ class GalleryViewModel : ViewModel() {
         value = "This is gallery Fragment"
     }
     val text: LiveData<String> = _text
+    fun setEmail (email : String){
+        _text.value = email
+    }
 }

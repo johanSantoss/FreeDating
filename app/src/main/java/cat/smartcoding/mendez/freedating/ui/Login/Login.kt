@@ -8,7 +8,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -41,7 +43,9 @@ class Login : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle? ): View? {
 
-//        auth = Firebase.auth
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
+        //auth = Firebase.auth
         // Inflate view and obtain an instance of the binding class
         binding = DataBindingUtil.inflate(
             inflater,
@@ -56,19 +60,15 @@ class Login : Fragment() {
 
 
         binding.btnAuthetification.setOnClickListener {
+
             viewModel.setEmail(binding.editTextMailAuth.text.toString().trim())
-//            email = viewModel.email.value.toString()
+ //           email = viewModel.email.value.toString()
 
             viewModel.setPassword(binding.editTextPassAuth.text.toString().trim())
 //            pass = binding.editTextPassAuth.text.toString()
 
 //            signIn( email.trim(), pass.trim())
-            signIn( viewModel.email.toString(), viewModel.password.toString())
-//            val action = LoginDirections.actionLoginToNavGallery2()
-//            action. = viewModel.email.value
-//            action.score = viewModel.score.value ?: 0
-//
-//            NavHostFragment.findNavController(this).navigate(action)
+            signIn( viewModel.email.value.toString(), viewModel.password.value.toString())
         }
 
         return binding.root
@@ -77,28 +77,38 @@ class Login : Fragment() {
 
 
     private fun signIn(email: String, password: String) {
-//        val auth : FirebaseAuth? = viewModel.auth.value
+       // val auth : FirebaseAuth? = viewModel.auth.value
 
 
         if (viewModel.auth.value != null){
             // [START sign_in_with_email]
-            viewModel.auth.value!!.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(requireActivity()) { task ->
-                    if (task.isSuccessful) {
-                        // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "signInWithEmail:success")
-                        Toast.makeText(activity, "Authentication success.", Toast.LENGTH_SHORT).show()
-                        val user = viewModel.auth.value!!.currentUser
+            try {
+                viewModel.auth.value!!.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(requireActivity()) { task ->
+                        if (task.isSuccessful) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithEmail:success")
+                            Toast.makeText(activity, "Authentication success.", Toast.LENGTH_SHORT).show()
+                            val user = viewModel.auth.value!!.currentUser
 
-                        clearText()
-                    } else {
-                        // If sign in fails, display a message to the user.
-                        Log.w(TAG, "signInWithEmail:failure", task.exception)
-                        Toast.makeText(activity, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show()
-                        clearText()
+                            clearText()
+
+                            val action = LoginDirections.actionLoginToNavGallery(email)
+                            NavHostFragment.findNavController(this).navigate(action)
+
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithEmail:failure", task.exception)
+                            Toast.makeText(activity, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show()
+                            clearText()
+                        }
                     }
-                }
+            }catch (e: IllegalArgumentException)  {
+                Toast.makeText(activity, "Authentication failed.",
+                    Toast.LENGTH_SHORT).show()
+            }
+
         }
 
     }

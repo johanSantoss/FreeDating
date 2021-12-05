@@ -10,7 +10,11 @@
         android:id="@+id/nav_gallery"
         android:name="cat.smartcoding.mendez.freedating.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <argument
+            android:name="email"
+            app:argType="string" />
+    </fragment>
 
     <!-- Search busqueda de parejas -->
     <fragment
@@ -75,7 +79,7 @@
         android:label="login_fragment"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/action_login_to_nav_gallery2"
+            android:id="@+id/action_login_to_nav_gallery"
             app:destination="@id/nav_gallery" />
     </fragment>
     <fragment
