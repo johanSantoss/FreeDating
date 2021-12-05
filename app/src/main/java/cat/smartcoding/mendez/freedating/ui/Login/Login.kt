@@ -5,11 +5,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.LayoutDirection
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.set
 import androidx.databinding.DataBindingUtil
@@ -23,12 +21,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import cat.smartcoding.mendez.freedating.databinding.FragmentLoginBinding
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import cat.smartcoding.mendez.freedating.MainActivity
+import cat.smartcoding.mendez.freedating.databinding.AppBarMainBinding
 import cat.smartcoding.mendez.freedating.ui.gallery.GalleryFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class Login : Fragment() {
 //    private lateinit var auth: FirebaseAuth
+    private lateinit var appBarConfiguration: AppCompatActivity
     private lateinit var binding: FragmentLoginBinding
+
     private lateinit var viewModel: LoginViewModel
 //    private lateinit var email : String
 //    private lateinit var pass  : String
@@ -42,9 +47,6 @@ class Login : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle? ): View? {
-
-        (activity as AppCompatActivity).supportActionBar?.hide()
-
         //auth = Firebase.auth
         // Inflate view and obtain an instance of the binding class
         binding = DataBindingUtil.inflate(
@@ -53,8 +55,8 @@ class Login : Fragment() {
             container,
             false
         )
-        Log.i("GameFragment", "Called ViewModelProvider.get")
 
+        Log.i("GameFragment", "Called ViewModelProvider.get")
         // Get the viewModel
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -117,6 +119,21 @@ class Login : Fragment() {
 
         binding.editTextMailAuth.editableText.clear()
         binding.editTextPassAuth.editableText.clear()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val supportActionBar = (requireActivity() as AppCompatActivity).supportActionBar
+        (activity as MainActivity).disableMenus()
+
+        supportActionBar?.hide()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        val supportActionBar = (requireActivity() as AppCompatActivity).supportActionBar
+        (activity as MainActivity).enableMenus()
+        supportActionBar?.show()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
