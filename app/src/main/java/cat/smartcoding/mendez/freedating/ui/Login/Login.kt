@@ -1,6 +1,7 @@
 package cat.smartcoding.mendez.freedating.ui.Login
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.LayoutDirection
 import android.util.Log
@@ -20,14 +21,15 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import cat.smartcoding.mendez.freedating.databinding.FragmentLoginBinding
 import androidx.navigation.fragment.findNavController
+import cat.smartcoding.mendez.freedating.ui.gallery.GalleryFragment
 
 
 class Login : Fragment() {
-    private lateinit var auth: FirebaseAuth
+//    private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentLoginBinding
     private lateinit var viewModel: LoginViewModel
-    private lateinit var email : String
-    private lateinit var pass  : String
+//    private lateinit var email : String
+//    private lateinit var pass  : String
 
     companion object {
         fun newInstance() = Login()
@@ -39,7 +41,7 @@ class Login : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle? ): View? {
 
-        auth = Firebase.auth
+//        auth = Firebase.auth
         // Inflate view and obtain an instance of the binding class
         binding = DataBindingUtil.inflate(
             inflater,
@@ -54,11 +56,14 @@ class Login : Fragment() {
 
 
         binding.btnAuthetification.setOnClickListener {
+            viewModel.setEmail(binding.editTextMailAuth.text.toString().trim())
+//            email = viewModel.email.value.toString()
 
-            email = binding.editTextMailAuth.text.toString()
-            pass = binding.editTextPassAuth.text.toString()
-            signIn( email.trim(), pass.trim())
+            viewModel.setPassword(binding.editTextPassAuth.text.toString().trim())
+//            pass = binding.editTextPassAuth.text.toString()
 
+//            signIn( email.trim(), pass.trim())
+            signIn( viewModel.email.toString(), viewModel.password.toString())
 //            val action = LoginDirections.actionLoginToNavGallery2()
 //            action. = viewModel.email.value
 //            action.score = viewModel.score.value ?: 0
@@ -72,24 +77,29 @@ class Login : Fragment() {
 
 
     private fun signIn(email: String, password: String) {
+//        val auth : FirebaseAuth? = viewModel.auth.value
 
-        // [START sign_in_with_email]
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithEmail:success")
-                    Toast.makeText(activity, "Authentication success.", Toast.LENGTH_SHORT).show()
-                    val user = auth.currentUser
-                    clearText()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(activity, "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                    clearText()
+
+        if (viewModel.auth.value != null){
+            // [START sign_in_with_email]
+            viewModel.auth.value!!.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity()) { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        Log.d(TAG, "signInWithEmail:success")
+                        Toast.makeText(activity, "Authentication success.", Toast.LENGTH_SHORT).show()
+                        val user = viewModel.auth.value!!.currentUser
+
+                        clearText()
+                    } else {
+                        // If sign in fails, display a message to the user.
+                        Log.w(TAG, "signInWithEmail:failure", task.exception)
+                        Toast.makeText(activity, "Authentication failed.",
+                            Toast.LENGTH_SHORT).show()
+                        clearText()
+                    }
                 }
-            }
+        }
 
     }
 
