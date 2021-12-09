@@ -51,5 +51,6 @@
     <string name="clearRegister">Clear Text</string>
     <string name="register">Registra</string>
     <string name="loginButton">INICIAR  SESIÓN</string>
+    <string name="registerText">¿TODAVÍA NO ERES USUARIO?</string>
 
 </resources>

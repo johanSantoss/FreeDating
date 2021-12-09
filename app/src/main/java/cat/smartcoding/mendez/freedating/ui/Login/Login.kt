@@ -73,6 +73,12 @@ class Login : Fragment() {
             signIn( viewModel.email.value.toString(), viewModel.password.value.toString())
         }
 
+        binding.textBtnRegister.setOnClickListener {
+            val action =  LoginDirections.actionLoginToRegister()
+            NavHostFragment.findNavController(this).navigate(action)
+
+        }
+
         return binding.root
         //return inflater.inflate(R.layout.fragment_login, container, false)
     }

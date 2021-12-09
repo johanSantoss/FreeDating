@@ -16,28 +16,15 @@
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="333dp"
-            android:layout_height="154dp"
+            android:layout_width="411dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/logo_free_dating"
             app:layout_constraintBottom_toTopOf="@+id/editTextMailAuth"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
-
-        <EditText
-            android:id="@+id/editTextMailAuth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:ems="10"
-            android:hint="@string/emailLogin"
-            android:inputType="textEmailAddress"
-            android:minHeight="48dp"
-            app:layout_constraintBottom_toTopOf="@+id/editTextPassAuth"
-            app:layout_constraintEnd_toEndOf="@+id/editTextPassAuth"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextPassAuth" />
 
         <EditText
             android:id="@+id/editTextPassAuth"
@@ -52,18 +39,21 @@
             app:layout_constraintHorizontal_bias="0.499"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.899" />
+            app:layout_constraintVertical_bias="0.765" />
 
-        <ImageView
-            android:id="@+id/imageView7"
+        <EditText
+            android:id="@+id/editTextMailAuth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="28dp"
-            android:src="@drawable/ic_baseline_lock_24"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextPassAuth"
-            app:layout_constraintEnd_toStartOf="@+id/editTextPassAuth"
-            app:layout_constraintTop_toTopOf="@+id/editTextPassAuth"
-            app:layout_constraintVertical_bias="0.476" />
+            android:layout_marginBottom="24dp"
+            android:ems="10"
+            android:hint="@string/emailLogin"
+            android:inputType="textEmailAddress"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toTopOf="@+id/editTextPassAuth"
+            app:layout_constraintEnd_toEndOf="@+id/editTextPassAuth"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editTextPassAuth" />
 
         <ImageView
             android:id="@+id/imageView6"
@@ -74,7 +64,17 @@
             app:layout_constraintBottom_toBottomOf="@+id/editTextMailAuth"
             app:layout_constraintEnd_toStartOf="@+id/editTextMailAuth"
             app:layout_constraintTop_toTopOf="@+id/editTextMailAuth"
-            app:layout_constraintVertical_bias="0.571" />
+            app:layout_constraintVertical_bias="1.0" />
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:src="@drawable/ic_baseline_lock_24"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextPassAuth"
+            app:layout_constraintEnd_toStartOf="@+id/editTextPassAuth"
+            app:layout_constraintTop_toTopOf="@+id/editTextPassAuth" />
 
         <Button
             android:id="@+id/btnAuthetification"
@@ -90,7 +90,18 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.909" />
+            app:layout_constraintVertical_bias="0.955" />
+
+        <TextView
+            android:id="@+id/textBtnRegister"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/registerText"
+            android:textColor="@color/buttonColor"
+            app:layout_constraintBottom_toTopOf="@+id/btnAuthetification"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextPassAuth" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -81,6 +81,9 @@
         <action
             android:id="@+id/action_login_to_nav_gallery"
             app:destination="@id/nav_gallery" />
+        <action
+            android:id="@+id/action_login_to_register"
+            app:destination="@id/register" />
     </fragment>
     <fragment
         android:id="@+id/register"
