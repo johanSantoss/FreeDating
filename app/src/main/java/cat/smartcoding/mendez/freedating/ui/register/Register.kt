@@ -50,6 +50,8 @@ class Register : Fragment() {
             viewModel.setPassword(binding.editTextPassword.text.toString().trim())
             viewModel.setPassword2(binding.editTextPassword2.text.toString().trim())
 
+            createAccount(viewModel.email.value.toString(), viewModel.password.value.toString(), viewModel.password2.value.toString())
+
         }
 
         binding.btnClear.setOnClickListener {
