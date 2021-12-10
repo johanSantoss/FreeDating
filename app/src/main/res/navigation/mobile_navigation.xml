@@ -89,6 +89,10 @@
         android:id="@+id/register"
         android:name="cat.smartcoding.mendez.freedating.ui.register.Register"
         android:label="register_fragment"
-        tools:layout="@layout/fragment_register" />
+        tools:layout="@layout/fragment_register" >
+        <action
+            android:id="@+id/action_register_to_login"
+            app:destination="@id/login" />
+    </fragment>
 
 </navigation>

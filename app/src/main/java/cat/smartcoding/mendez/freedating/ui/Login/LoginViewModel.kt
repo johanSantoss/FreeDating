@@ -18,8 +18,8 @@ import com.google.firebase.ktx.Firebase
 
 class LoginViewModel : ViewModel() {
     // authentication
-    private val _auth  = MutableLiveData<FirebaseAuth>(Firebase.auth)
-    val auth: LiveData<FirebaseAuth> get() = _auth
+//    private val _auth  = MutableLiveData<FirebaseAuth>(Firebase.auth)
+//    val auth: LiveData<FirebaseAuth> get() = _auth
 
     // mail
     private val _email = MutableLiveData<String>("")

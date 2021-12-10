@@ -31,7 +31,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class Login : Fragment() {
 //    private lateinit var auth: FirebaseAuth
-    private lateinit var appBarConfiguration: AppCompatActivity
+//    private lateinit var appBarConfiguration: AppCompatActivity
     private lateinit var binding: FragmentLoginBinding
 
     private lateinit var viewModel: LoginViewModel
@@ -56,7 +56,7 @@ class Login : Fragment() {
             false
         )
 
-        Log.i("GameFragment", "Called ViewModelProvider.get")
+
         // Get the viewModel
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
@@ -88,16 +88,16 @@ class Login : Fragment() {
        // val auth : FirebaseAuth? = viewModel.auth.value
 
 
-        if (viewModel.auth.value != null){
+        if ((activity as MainActivity).getAuth() != null){
             // [START sign_in_with_email]
             try {
-                viewModel.auth.value!!.signInWithEmailAndPassword(email, password)
+                (activity as MainActivity).getAuth().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success")
                             Toast.makeText(activity, "Authentication success.", Toast.LENGTH_SHORT).show()
-                            val user = viewModel.auth.value!!.currentUser
+                            val user = (activity as MainActivity).getAuth().currentUser
 
                             clearText()
 
@@ -107,8 +107,7 @@ class Login : Fragment() {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.exception)
-                            Toast.makeText(activity, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                            Toast.makeText(activity, "Authentication failed.", Toast.LENGTH_SHORT).show()
                             clearText()
                         }
                     }
@@ -139,6 +138,7 @@ class Login : Fragment() {
         super.onStop()
         val supportActionBar = (requireActivity() as AppCompatActivity).supportActionBar
         (activity as MainActivity).enableMenus()
+//        (activity as MainActivity).getAuth()
         supportActionBar?.show()
     }
 
