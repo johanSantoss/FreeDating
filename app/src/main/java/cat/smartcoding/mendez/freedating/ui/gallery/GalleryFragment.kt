@@ -10,10 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.navArgs
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.FragmentGalleryBinding
+import cat.smartcoding.mendez.freedating.ui.Login.LoginDirections
 
 
 class GalleryFragment : Fragment() {
@@ -30,6 +32,12 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if ( (activity as MainActivity).getAuth().currentUser == null ){
+            val action = GalleryFragmentDirections.actionNavGalleryToLogin()
+            NavHostFragment.findNavController(this).navigate(action)
+        }
+
         galleryViewModel =
             ViewModelProvider(this).get(GalleryViewModel::class.java)
 

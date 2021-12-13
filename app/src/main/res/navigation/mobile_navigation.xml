@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/login">
+    app:startDestination="@id/nav_gallery">
 
     <!-- Gallery parejas sugeridas del dia -->
     <fragment
@@ -14,6 +14,9 @@
         <argument
             android:name="email"
             app:argType="string" />
+        <action
+            android:id="@+id/action_nav_gallery_to_login"
+            app:destination="@id/login" />
     </fragment>
 
     <!-- Search busqueda de parejas -->
