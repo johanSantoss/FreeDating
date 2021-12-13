@@ -2,6 +2,7 @@ package cat.smartcoding.mendez.freedating.ui.gallery
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.FragmentGalleryBinding
-import cat.smartcoding.mendez.freedating.ui.Login.LoginDirections
+
 
 
 class GalleryFragment : Fragment() {
@@ -33,9 +34,14 @@ class GalleryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        if ( (activity as MainActivity).getAuth().currentUser == null ){
+        val user = (activity as MainActivity).getAuth().currentUser
+
+        if ( user == null ) {
+            Log.d("Auth", "user es nulo")
             val action = GalleryFragmentDirections.actionNavGalleryToLogin()
             NavHostFragment.findNavController(this).navigate(action)
+        }else{
+            Log.d("Auth", "user no nulo: " + user.email)
         }
 
         galleryViewModel =
@@ -48,10 +54,6 @@ class GalleryFragment : Fragment() {
         galleryViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
-
-       val email: String = GalleryFragmentArgs.fromBundle(requireArguments()).email
-
-        galleryViewModel.setEmail(email)
 
         return root
     }
