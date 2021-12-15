@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 //        when(item.itemId) {
 //        }
         when (item.itemId){
-            R.id.exit -> {
+            R.id.action_logOut -> {
                 auth.signOut()
             }
         }
