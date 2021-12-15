@@ -1,9 +1,11 @@
 package cat.smartcoding.mendez.freedating
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -83,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_profiles,
                 R.id.nav_mailbox,
                 R.id.nav_user,
-//                R.id.nav_settings
+                R.id.nav_settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -120,9 +122,16 @@ class MainActivity : AppCompatActivity() {
 //        val navController = findNavController(R.id.nav_host_fragment_content_main)
 //        navController.navigateUp()
 //        navController.navigate()
-        return super.onOptionsItemSelected(item)
+//        return super.onOptionsItemSelected(item)
 //        when(item.itemId) {
 //        }
+        when (item.itemId){
+            R.id.exit -> {
+                auth.signOut()
+            }
+        }
+
+        return false
     }
 
     override fun onSupportNavigateUp(): Boolean {
