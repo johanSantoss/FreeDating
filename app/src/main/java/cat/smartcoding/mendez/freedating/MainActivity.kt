@@ -1,5 +1,6 @@
 package cat.smartcoding.mendez.freedating
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -20,6 +21,9 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import android.os.Build
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 
 
 /*
@@ -128,6 +132,8 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId){
             R.id.action_logOut -> {
                 auth.signOut()
+                finish();
+                startActivity(getIntent());
             }
         }
 
