@@ -54,4 +54,9 @@
     <string name="loginButton">INICIAR  SESIÓN</string>
     <string name="registerText">¿TODAVÍA NO ERES USUARIO?</string>
 
+    <!-- Profile -->
+    <string name="titelProfile">Hola!!</string>
+    <string name="btnCamera">Camara</string>
+    <string name="btnGallery">Galeria</string>
+
 </resources>
