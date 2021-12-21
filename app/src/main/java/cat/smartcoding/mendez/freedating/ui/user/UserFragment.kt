@@ -14,15 +14,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.FragmentLoginBinding
 import cat.smartcoding.mendez.freedating.databinding.UserFragmentBinding
 import cat.smartcoding.mendez.freedating.ui.Login.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
+import java.io.ByteArrayOutputStream
 
 class UserFragment : Fragment() {
 
     private lateinit var binding: UserFragmentBinding
+    private lateinit var storageRef : StorageReference
 
     companion object {
         fun newInstance() = UserFragment()
@@ -50,6 +58,14 @@ class UserFragment : Fragment() {
 
 
             viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+        //  Storage variables
+            val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
+            storageRef = storage.reference
+
+            val pathReference = storageRef.child( "imagenes/prueba.jpg")
+            val im = pathReference.getBytes(50000)
+            // añadir imagen al viewModel
 
             binding.btnCamera.setOnClickListener {
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -93,12 +109,28 @@ class UserFragment : Fragment() {
         }
     }
 
+    private fun upImageProfile(){
+        val auth: FirebaseAuth = Firebase.auth
+
+        val bitmaps = binding.imgUserProfile.drawable.toBitmap(binding.imgUserProfile.width, binding.imgUserProfile.height)
+        val outba = ByteArrayOutputStream()
+        bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
+        val dadesbytes = outba.toByteArray() //passa les dades a ByteArray
+        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/imageProfile")
+        pathReferenceSubir.putBytes( dadesbytes )
+        Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
-            binding.imgUserProfile.setImageURI(data?.data)
+//            binding.imgUserProfile.setImageURI(data?.data)
+            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
+            binding.imgUserProfile.setImageBitmap(imgBitMap)
+            upImageProfile()
         }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
             val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
             binding.imgUserProfile.setImageBitmap(imgBitMap)
+            upImageProfile()
         }
     }
 
