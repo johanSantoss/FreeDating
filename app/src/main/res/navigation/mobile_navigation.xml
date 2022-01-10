@@ -79,8 +79,7 @@
     <fragment
         android:id="@+id/login"
         android:name="cat.smartcoding.mendez.freedating.ui.Login.Login"
-        android:label="login_fragment"
-        tools:layout="@layout/fragment_login" >
+        android:label="login_fragment">
         <action
             android:id="@+id/action_login_to_nav_gallery"
             app:destination="@id/nav_gallery" />
