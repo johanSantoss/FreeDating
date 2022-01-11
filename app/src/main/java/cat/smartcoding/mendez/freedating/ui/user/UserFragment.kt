@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
+import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.FragmentLoginBinding
 import cat.smartcoding.mendez.freedating.databinding.UserFragmentBinding
@@ -63,9 +64,9 @@ class UserFragment : Fragment() {
             val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
             storageRef = storage.reference
 
-            val pathReference = storageRef.child( "imagenes/prueba.jpg")
-            val im = pathReference.getBytes(50000)
-            // añadir imagen al viewModel
+//            val pathReference = storageRef.child( "imagenes/prueba.jpg")
+//            val im = pathReference.getBytes(50000)
+//            // añadir imagen al viewModel
 
             binding.btnCamera.setOnClickListener {
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -123,9 +124,9 @@ class UserFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
-//            binding.imgUserProfile.setImageURI(data?.data)
-            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
-            binding.imgUserProfile.setImageBitmap(imgBitMap)
+            binding.imgUserProfile.setImageURI(data?.data)
+//            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
+//            binding.imgUserProfile.setImageBitmap(imgBitMap)
             upImageProfile()
         }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
             val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
