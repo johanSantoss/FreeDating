@@ -5,6 +5,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -50,41 +51,47 @@ class UserFragment : Fragment() {
     ): View? {
 
 
-            binding = DataBindingUtil.inflate(
-                    inflater,
-                    R.layout.user_fragment,
-                    container,
-                    false
-            )
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.user_fragment,
+                container,
+                false
+        )
 
 
-            viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
-        //  Storage variables
-            val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
-            storageRef = storage.reference
+//    //  Storage variables
+//        val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
+//        storageRef = storage.reference
+//        // abrir una imagen por defecto
+//        val pathReference = storageRef.child( "imagenes/imageProfile.jpeg")
+//        val im = pathReference.getBytes(50000)
+//        // listener para setear el ImageView
+//        im.addOnSuccessListener {
+//            //llegim la imatge que estarà en "it"
+//            var bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
+//            binding.imgUserProfile.setImageBitmap( bitmap ) //posa el bitmap a la imatge
+//        }
+        // añadir imagen al viewModel
 
-//            val pathReference = storageRef.child( "imagenes/prueba.jpg")
-//            val im = pathReference.getBytes(50000)
-//            // añadir imagen al viewModel
+        binding.btnCamera.setOnClickListener {
+            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
+        }
 
-            binding.btnCamera.setOnClickListener {
-                val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
-            }
-
-            binding.btnGallery.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if (requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
-                        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        requestPermissions(permissions, PERMISSION_CODE)
-                    } else{
-                        chooseImageGallery();
-                    }
-                }else{
+        binding.btnGallery.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else{
                     chooseImageGallery();
                 }
+            }else{
+                chooseImageGallery();
             }
+        }
         return binding.root
     }
 
