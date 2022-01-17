@@ -76,6 +76,8 @@ class UserFragment : Fragment() {
 //        }
         // añadir imagen al viewModel
 
+
+
             binding.btnCamera.setOnClickListener {
                 val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
