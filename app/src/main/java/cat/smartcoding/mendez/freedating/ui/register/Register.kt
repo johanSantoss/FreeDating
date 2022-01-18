@@ -46,10 +46,8 @@ class Register : Fragment() {
 
         binding.btnNewRegister.setOnClickListener {
 
-            viewModel.setEmail(binding.editTextEmailRegister.text.toString().trim())
-            viewModel.setPassword(binding.editTextPassword.text.toString().trim())
-            viewModel.setPassword2(binding.editTextPassword2.text.toString().trim())
-
+            // hay que generar un control para que los campos no esten vacios antes de iniciar este proceso--------------------------------------------------------------------------------------------------
+            subirDatos()
             createAccount(viewModel.email.value.toString(), viewModel.password.value.toString(), viewModel.password2.value.toString())
 
         }
@@ -98,10 +96,9 @@ class Register : Fragment() {
                         Log.d(TAG, "createUserWithEmail:success")
 //                        val user = (activity as MainActivity).getAuth().currentUser
                         Toast.makeText(activity, "Register success!", Toast.LENGTH_SHORT).show()
+                        subirDatos()
                         val action = RegisterDirections.actionRegisterToLogin()
                         NavHostFragment.findNavController(this).navigate(action)
-
-
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "createUserWithEmail:failure", task.exception)
@@ -114,4 +111,13 @@ class Register : Fragment() {
         }
     }
 
+    private fun subirDatos(){
+        // guardar datos en el viewModel--------------------------------------------------------------------------------------------------------------------------------------
+        viewModel.setEmail(binding.editTextEmailRegister.text.toString().trim())
+        viewModel.setPassword(binding.editTextPassword.text.toString().trim())
+        viewModel.setPassword2(binding.editTextPassword2.text.toString().trim())
+
+        // guardar datos en "RealTimeDataBase" ---------------------------------------------------------------------------------------------------------------------------------
+
+    }
 }
