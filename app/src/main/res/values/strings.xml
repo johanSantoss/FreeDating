@@ -7,6 +7,16 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
+    <!-- Registre -->
+    <string name="noms">Nom amb cognoms</string>
+    <string name="edat">Inserir edat</string>
+    <string name="sexe1">Dona</string>
+    <string name="sexe2">Home</string>
+    <string name="ciutat">Inserir la vostra ciutat</string>
+    <string name="emailRegister">Inserir un email…</string>
+    <string name="passwordRegister">Password…</string>
+    <string name="passwordRegister2">Torna a repetir el password!</string>
+
     <string name="menu_gallery">Gallery</string>
     <string name="menu_search">Search</string>
     <string name="menu_profiles">Profiles</string>
@@ -44,8 +54,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <!-- Sync contents -->
-    <string name="emailRegister">Inserir un email…</string>
-    <string name="passwordRegister">Password…</string>
     <string name="emailLogin">Email</string>
     <string name="passwordLogin">Password</string>
     <string name="passwordLogin2">Repeat Password</string>
