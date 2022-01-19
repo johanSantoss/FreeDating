@@ -26,6 +26,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import org.imaginativeworld.whynotimagecarousel.CarouselItem
+import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.OnItemClickListener
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
@@ -34,6 +37,8 @@ class UserFragment : Fragment() {
 
     private lateinit var binding: UserFragmentBinding
     private lateinit var storageRef : StorageReference
+    private val list = mutableListOf<CarouselItem>()
+    private lateinit var carousel : ImageCarousel
 
     companion object {
         fun newInstance() = UserFragment()
@@ -52,16 +57,14 @@ class UserFragment : Fragment() {
     ): View? {
 
 
-            binding = DataBindingUtil.inflate(
-                    inflater,
-                    R.layout.user_fragment,
-                    container,
-                    false
-            )
-
-
-            viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.user_fragment,
+                container,
+                false
+        )
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        cargarCarousel()
         //  Storage variables
         val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
         storageRef = storage.reference
@@ -76,25 +79,23 @@ class UserFragment : Fragment() {
 //        }
         // añadir imagen al viewModel
 
+        binding.btnCamera.setOnClickListener {
+            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
+        }
 
-
-            binding.btnCamera.setOnClickListener {
-                val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
-            }
-
-            binding.btnGallery.setOnClickListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                    if (requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
-                        val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
-                        requestPermissions(permissions, PERMISSION_CODE)
-                    } else{
-                        chooseImageGallery();
-                    }
-                }else{
+        binding.btnGallery.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+                if (requireActivity().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_DENIED){
+                    val permissions = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    requestPermissions(permissions, PERMISSION_CODE)
+                } else{
                     chooseImageGallery();
                 }
+            }else{
+                chooseImageGallery();
             }
+        }
         return binding.root
     }
 
@@ -152,6 +153,23 @@ class UserFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         // TODO: Use the ViewModel
+    }
+    private fun cargarCarousel(){
+        carousel = binding.carousel1
+        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/02/08/noticias/1612786479_151283_1612786596_portada_normal.jpg", "primera imagen"))
+        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/05/18/noticias/1621331371_078391_1621331484_noticia_normal.jpg", "segunda imagen"))
+        list.add(CarouselItem("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/one-piece-1636660305.png?crop=1.00xw:0.365xh;0,0.153xh&resize=640:*", "tercera imagen"))
+        carousel.onItemClickListener = object : OnItemClickListener {
+            override fun onClick(position: Int, carouselItem: CarouselItem) {
+                Toast.makeText(requireContext(),"${carouselItem.caption}", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onLongClick(position: Int, dataObject: CarouselItem) {
+                TODO("Not yet implemented")
+            }
+        }
+
+        carousel.addData(list)
     }
 
 }
