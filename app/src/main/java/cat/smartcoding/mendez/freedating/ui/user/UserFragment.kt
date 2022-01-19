@@ -121,33 +121,33 @@ class UserFragment : Fragment() {
         }
     }
 
-    private fun upImageProfile(){
-        val auth: FirebaseAuth = Firebase.auth
-
-        val bitmaps = binding.imgUserProfile.drawable.toBitmap(binding.imgUserProfile.width, binding.imgUserProfile.height)
-        val outba = ByteArrayOutputStream()
-        bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
-        val dadesbytes = outba.toByteArray() //passa les dades a ByteArray
-        val c: Calendar = Calendar.getInstance()
-        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
-        val strDate: String = sdf.format(c.getTime())
-        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/"+ strDate)
-        pathReferenceSubir.putBytes( dadesbytes )
-        Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
-            binding.imgUserProfile.setImageURI(data?.data)
+//    private fun upImageProfile(){
+//        val auth: FirebaseAuth = Firebase.auth
+//
+//        val bitmaps = binding.imgUserProfile.drawable.toBitmap(binding.imgUserProfile.width, binding.imgUserProfile.height)
+//        val outba = ByteArrayOutputStream()
+//        bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
+//        val dadesbytes = outba.toByteArray() //passa les dades a ByteArray
+//        val c: Calendar = Calendar.getInstance()
+//        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+//        val strDate: String = sdf.format(c.getTime())
+//        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/"+ strDate)
+//        pathReferenceSubir.putBytes( dadesbytes )
+//        Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
+//    }
+//
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
+//            binding.imgUserProfile.setImageURI(data?.data)
+////            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
+////            binding.imgUserProfile.setImageBitmap(imgBitMap)
+//            upImageProfile()
+//        }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
 //            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
 //            binding.imgUserProfile.setImageBitmap(imgBitMap)
-            upImageProfile()
-        }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
-            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
-            binding.imgUserProfile.setImageBitmap(imgBitMap)
-            upImageProfile()
-        }
-    }
+//            upImageProfile()
+//        }
+//    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

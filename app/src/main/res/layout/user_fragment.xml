@@ -13,6 +13,7 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="65dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +22,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constrain2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <EditText
                     android:id="@+id/editTextMailUser"
@@ -43,16 +44,6 @@
                     app:layout_constraintTop_toTopOf="parent">
 
                 </org.imaginativeworld.whynotimagecarousel.ImageCarousel>
-
-                <ImageView
-                    android:id="@+id/imgUserProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextMailUser"
-                    app:layout_constraintVertical_bias="0.0" />
 
                 <TextView
                     android:id="@+id/textUserProfile"
@@ -200,6 +191,7 @@
                     app:layout_constraintEnd_toEndOf="@+id/editTextSexeUser"
                     app:layout_constraintStart_toStartOf="@+id/editTextSexeUser"
                     app:layout_constraintTop_toBottomOf="@+id/editTextSexeUser" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
