@@ -10,191 +10,198 @@
         android:layout_height="match_parent"
         tools:context=".ui.user.UserFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/scrollView3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <EditText
-                android:id="@+id/editTextMailUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/editTextCiutatUser"
-                app:layout_constraintStart_toStartOf="@+id/editTextCiutatUser"
-                app:layout_constraintTop_toBottomOf="@+id/editTextCiutatUser" />
-
-            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
-                android:id="@+id/carousel1"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constrain2"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content">
 
-            </org.imaginativeworld.whynotimagecarousel.ImageCarousel>
+                <EditText
+                    android:id="@+id/editTextMailUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextCiutatUser"
+                    app:layout_constraintStart_toStartOf="@+id/editTextCiutatUser"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextCiutatUser" />
 
-            <ImageView
-                android:id="@+id/imgUserProfile"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextMailUser"
-                app:layout_constraintVertical_bias="0.0"
-                tools:src="@tools:sample/avatars" />
+                <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+                    android:id="@+id/carousel1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/textUserProfile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/subirImagen"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/carousel1" />
+                </org.imaginativeworld.whynotimagecarousel.ImageCarousel>
 
-            <Button
-                android:id="@+id/btnGallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/btnGallery"
-                app:layout_constraintEnd_toStartOf="@+id/btnCamera"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textUserProfile" />
+                <ImageView
+                    android:id="@+id/imgUserProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextMailUser"
+                    app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/btnCamera"
-                android:layout_width="wrap_content"
-                android:layout_height="48dp"
-                android:text="@string/btnCamera"
-                app:layout_constraintBottom_toBottomOf="@+id/btnGallery"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/btnGallery"
-                app:layout_constraintTop_toTopOf="@+id/btnGallery" />
+                <TextView
+                    android:id="@+id/textUserProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/subirImagen"
+                    android:textSize="20sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/carousel1" />
 
-            <TextView
-                android:id="@+id/textViewNomUser"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="@string/nomUser"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextNomUser"
-                app:layout_constraintEnd_toStartOf="@+id/editTextNomUser"
-                app:layout_constraintHorizontal_bias="0.01"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/editTextNomUser" />
+                <Button
+                    android:id="@+id/btnGallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnGallery"
+                    app:layout_constraintEnd_toStartOf="@+id/btnCamera"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textUserProfile" />
 
-            <TextView
-                android:id="@+id/textViewEdatUser"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="@string/edatUser"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextEdatUser"
-                app:layout_constraintEnd_toEndOf="@+id/textViewNomUser"
-                app:layout_constraintStart_toStartOf="@+id/textViewNomUser"
-                app:layout_constraintTop_toTopOf="@+id/editTextEdatUser" />
+                <Button
+                    android:id="@+id/btnCamera"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:text="@string/btnCamera"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnGallery"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/btnGallery"
+                    app:layout_constraintTop_toTopOf="@+id/btnGallery" />
 
-            <TextView
-                android:id="@+id/textViewSexeUser"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="@string/sexeUser"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextSexeUser"
-                app:layout_constraintEnd_toEndOf="@+id/textViewEdatUser"
-                app:layout_constraintStart_toStartOf="@+id/textViewEdatUser"
-                app:layout_constraintTop_toTopOf="@+id/editTextSexeUser" />
+                <TextView
+                    android:id="@+id/textViewNomUser"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nomUser"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextNomUser"
+                    app:layout_constraintEnd_toStartOf="@+id/editTextNomUser"
+                    app:layout_constraintHorizontal_bias="0.01"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/editTextNomUser" />
 
-            <TextView
-                android:id="@+id/textViewCiutatUser"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="@string/ciutatUser"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextCiutatUser"
-                app:layout_constraintEnd_toEndOf="@+id/textViewSexeUser"
-                app:layout_constraintStart_toStartOf="@+id/textViewSexeUser"
-                app:layout_constraintTop_toTopOf="@+id/editTextCiutatUser" />
+                <TextView
+                    android:id="@+id/textViewEdatUser"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/edatUser"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextEdatUser"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewNomUser"
+                    app:layout_constraintStart_toStartOf="@+id/textViewNomUser"
+                    app:layout_constraintTop_toTopOf="@+id/editTextEdatUser" />
 
-            <TextView
-                android:id="@+id/textViewMailUser"
-                android:layout_width="70dp"
-                android:layout_height="wrap_content"
-                android:text="@string/mailUser"
-                android:textAlignment="center"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/editTextMailUser"
-                app:layout_constraintEnd_toEndOf="@+id/textViewCiutatUser"
-                app:layout_constraintStart_toStartOf="@+id/textViewCiutatUser"
-                app:layout_constraintTop_toTopOf="@+id/editTextMailUser" />
+                <TextView
+                    android:id="@+id/textViewSexeUser"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sexeUser"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextSexeUser"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewEdatUser"
+                    app:layout_constraintStart_toStartOf="@+id/textViewEdatUser"
+                    app:layout_constraintTop_toTopOf="@+id/editTextSexeUser" />
 
-            <EditText
-                android:id="@+id/editTextNomUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/textViewNomUser"
-                app:layout_constraintTop_toBottomOf="@+id/btnGallery"
-                app:layout_constraintVertical_bias="0.13" />
+                <TextView
+                    android:id="@+id/textViewCiutatUser"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ciutatUser"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextCiutatUser"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewSexeUser"
+                    app:layout_constraintStart_toStartOf="@+id/textViewSexeUser"
+                    app:layout_constraintTop_toTopOf="@+id/editTextCiutatUser" />
 
-            <EditText
-                android:id="@+id/editTextEdatUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/editTextNomUser"
-                app:layout_constraintStart_toStartOf="@+id/editTextNomUser"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNomUser" />
+                <TextView
+                    android:id="@+id/textViewMailUser"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mailUser"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/editTextMailUser"
+                    app:layout_constraintEnd_toEndOf="@+id/textViewCiutatUser"
+                    app:layout_constraintStart_toStartOf="@+id/textViewCiutatUser"
+                    app:layout_constraintTop_toTopOf="@+id/editTextMailUser" />
 
-            <EditText
-                android:id="@+id/editTextSexeUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/editTextEdatUser"
-                app:layout_constraintStart_toStartOf="@+id/editTextEdatUser"
-                app:layout_constraintTop_toBottomOf="@+id/editTextEdatUser" />
+                <EditText
+                    android:id="@+id/editTextNomUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/textViewNomUser"
+                    app:layout_constraintTop_toBottomOf="@+id/btnGallery"
+                    app:layout_constraintVertical_bias="0.13"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-            <EditText
-                android:id="@+id/editTextCiutatUser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:textAlignment="center"
-                app:layout_constraintEnd_toEndOf="@+id/editTextSexeUser"
-                app:layout_constraintStart_toStartOf="@+id/editTextSexeUser"
-                app:layout_constraintTop_toBottomOf="@+id/editTextSexeUser" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <EditText
+                    android:id="@+id/editTextEdatUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextNomUser"
+                    app:layout_constraintStart_toStartOf="@+id/editTextNomUser"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextNomUser"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <EditText
+                    android:id="@+id/editTextSexeUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextEdatUser"
+                    app:layout_constraintStart_toStartOf="@+id/editTextEdatUser"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextEdatUser"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+                <EditText
+                    android:id="@+id/editTextCiutatUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:textAlignment="center"
+                    app:layout_constraintEnd_toEndOf="@+id/editTextSexeUser"
+                    app:layout_constraintStart_toStartOf="@+id/editTextSexeUser"
+                    app:layout_constraintTop_toBottomOf="@+id/editTextSexeUser" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
