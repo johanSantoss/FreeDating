@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,11 @@ import cat.smartcoding.mendez.freedating.databinding.UserFragmentBinding
 import cat.smartcoding.mendez.freedating.ui.Login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -39,6 +45,7 @@ class UserFragment : Fragment() {
     private lateinit var storageRef : StorageReference
     private val list = mutableListOf<CarouselItem>()
     private lateinit var carousel : ImageCarousel
+    private lateinit var database: FirebaseDatabase
 
     companion object {
         fun newInstance() = UserFragment()
@@ -55,8 +62,6 @@ class UserFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         binding = DataBindingUtil.inflate(
                 inflater,
                 R.layout.user_fragment,
@@ -65,9 +70,18 @@ class UserFragment : Fragment() {
         )
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         cargarCarousel()
+
         //  Storage variables
         val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
         storageRef = storage.reference
+
+        // Conection to DataBase
+        // cambiar el link del Storage por el correcto, este no es valido --------------------------------------------------------------------------------------------------------------------
+        database = FirebaseDatabase.getInstance("https://projecte1-6bfbd-default-rtdb.europe-west1.firebasedatabase.app/")
+
+        // cargar los datos del usuario
+        cargarDatosUsuario()
+
 //        // abrir una imagen por defecto
 //        val pathReference = storageRef.child( "imagenes/imageProfile.jpeg")
 //        val im = pathReference.getBytes(50000)
@@ -170,6 +184,54 @@ class UserFragment : Fragment() {
         }
 
         carousel.addData(list)
+    }
+
+    data class DatosUsuari(
+        // preguntar si hay que inicializar las variables------------------------------------------------------------------------------------------------------------------------------
+        var nom: String,
+        var edat: String,
+        var sexe: String,
+        var ciutat: String,
+        var email: String,
+    )
+
+    private fun cargarDatosUsuario(){
+        val auth = (activity as MainActivity).getAuth()
+
+        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
+        myRef.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                val value = snapshot.getValue<DatosUsuari>()
+                val user = DatosUsuari(value?.nom?:"",value?.edat?:"", value?.sexe?:"", value?.ciutat?:"", value?.email?:"")
+
+                binding.editTextNomUser.setText(user.nom)
+                binding.editTextEdatUser.setText(user.edat)
+                binding.editTextSexeUser.setText(user.sexe)
+                binding.editTextCiutatUser.setText(user.ciutat)
+                binding.editTextMailUser.setText(user.email)
+
+                //btModifica.isEnabled = true
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+                binding.editTextNomUser.setText("Error al cargar los datos")
+                binding.editTextEdatUser.setText("Error al cargar los datos")
+                binding.editTextSexeUser.setText("Error al cargar los datos")
+                binding.editTextCiutatUser.setText("Error al cargar los datos")
+                binding.editTextMailUser.setText("Error al cargar los datos")
+                //btModifica.isEnabled = true
+            }
+        })
+
+
+//        if (auth.currentUser?.uid == null){
+//            // setear campos con estado "sin definir"
+//        } else {
+//            // setear campos con datos user
+//        }
     }
 
 }

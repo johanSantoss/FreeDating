@@ -48,7 +48,7 @@ class Register : Fragment() {
         // Get the viewModel
         viewModel = ViewModelProvider(this).get(RegisterViewModel::class.java)
 
-        // Conection to Storage
+        // Conection to DataBase
         // cambiar el link del Storage por el correcto, este no es valido --------------------------------------------------------------------------------------------------------------------
         database = FirebaseDatabase.getInstance("https://projecte1-6bfbd-default-rtdb.europe-west1.firebasedatabase.app/")
 
