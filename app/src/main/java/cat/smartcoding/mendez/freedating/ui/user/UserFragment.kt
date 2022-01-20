@@ -77,10 +77,10 @@ class UserFragment : Fragment() {
 
         // Conection to DataBase
         // cambiar el link del Storage por el correcto, este no es valido --------------------------------------------------------------------------------------------------------------------
-        database = FirebaseDatabase.getInstance("https://projecte1-6bfbd-default-rtdb.europe-west1.firebasedatabase.app/")
+        database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
         // cargar los datos del usuario
-        cargarDatosUsuario()
+        //cargarDatosUsuario()
 
 //        // abrir una imagen por defecto
 //        val pathReference = storageRef.child( "imagenes/imageProfile.jpeg")
@@ -195,36 +195,36 @@ class UserFragment : Fragment() {
         var email: String,
     )
 
-    private fun cargarDatosUsuario(){
-        val auth = (activity as MainActivity).getAuth()
-
-        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
-        myRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                val value = snapshot.getValue<DatosUsuari>()
-                val user = DatosUsuari(value?.nom?:"",value?.edat?:"", value?.sexe?:"", value?.ciutat?:"", value?.email?:"")
-
-                binding.editTextNomUser.setText(user.nom)
-                binding.editTextEdatUser.setText(user.edat)
-                binding.editTextSexeUser.setText(user.sexe)
-                binding.editTextCiutatUser.setText(user.ciutat)
-                binding.editTextMailUser.setText(user.email)
-
-                //btModifica.isEnabled = true
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-
-                binding.editTextNomUser.setText("Error al cargar los datos")
-                binding.editTextEdatUser.setText("Error al cargar los datos")
-                binding.editTextSexeUser.setText("Error al cargar los datos")
-                binding.editTextCiutatUser.setText("Error al cargar los datos")
-                binding.editTextMailUser.setText("Error al cargar los datos")
-                //btModifica.isEnabled = true
-            }
-        })
+//    private fun cargarDatosUsuario(){
+//        val auth = (activity as MainActivity).getAuth()
+//
+//        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
+//        myRef.addValueEventListener(object: ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                // This method is called once with the initial value and again
+//                // whenever data at this location is updated.
+//                val value = snapshot.getValue<DatosUsuari>()
+//                val user = DatosUsuari(value?.nom?:"",value?.edat?:"", value?.sexe?:"", value?.ciutat?:"", value?.email?:"")
+//
+//                binding.editTextNomUser.setText(user.nom)
+//                binding.editTextEdatUser.setText(user.edat)
+//                binding.editTextSexeUser.setText(user.sexe)
+//                binding.editTextCiutatUser.setText(user.ciutat)
+//                binding.editTextMailUser.setText(user.email)
+//
+//                //btModifica.isEnabled = true
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//
+//                binding.editTextNomUser.setText("Error al cargar los datos")
+//                binding.editTextEdatUser.setText("Error al cargar los datos")
+//                binding.editTextSexeUser.setText("Error al cargar los datos")
+//                binding.editTextCiutatUser.setText("Error al cargar los datos")
+//                binding.editTextMailUser.setText("Error al cargar los datos")
+//                //btModifica.isEnabled = true
+//            }
+//        })
 
 
 //        if (auth.currentUser?.uid == null){
@@ -232,6 +232,6 @@ class UserFragment : Fragment() {
 //        } else {
 //            // setear campos con datos user
 //        }
-    }
+ //   }
 
 }
