@@ -138,7 +138,6 @@ class Register : Fragment() {
     }
 
     data class DatosUsuari(
-        // preguntar si hay que inicializar las variables------------------------------------------------------------------------------------------------------------------------------
         var nom: String,
         var edat: String,
         var sexe: String,
