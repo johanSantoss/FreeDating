@@ -53,16 +53,36 @@ class Register : Fragment() {
         database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
         binding.btnNewRegister.setOnClickListener {
-            if (binding.editTextName.text == null ||
-                binding.editTextEdat.text == null ||
-                binding.radioGroupRegistre.checkedRadioButtonId == null ||
-                binding.editTextCiutat.text == null ||
-                binding.editTextEmailRegister.text == null ||
-                binding.editTextPassword.text == null ||
-                binding.editTextPassword2.text == null) {
-                Toast.makeText(activity, "Faltan datos por completar!", Toast.LENGTH_SHORT).show()
-            } else {
+
+            if (binding.editTextName.text == null ) {
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
                 saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.editTextEdat.text == null) {
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.radioGroupRegistre.checkedRadioButtonId == null ){
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.editTextCiutat.text == null ){
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.editTextEmailRegister.text == null){
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.editTextPassword.text == null ){
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else if (binding.editTextPassword2.text == null ){
+                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                saveDatesUserViewModel()
+                viewModel.setEstadoRegistro(1)
+            } else {
                 createAccount(viewModel.email.value.toString(), viewModel.password.value.toString(), viewModel.password2.value.toString())
             }
         }
@@ -70,6 +90,8 @@ class Register : Fragment() {
         binding.btnClear.setOnClickListener {
             clearDates()
         }
+
+        if (viewModel.estadoRegistro.value == 1 ) restaurarDatos()
 
         return  binding.root
 //        return inflater.inflate(R.layout.fragment_register, container, false)
@@ -87,7 +109,7 @@ class Register : Fragment() {
         super.onStop()
         val supportActionBar = (requireActivity() as AppCompatActivity).supportActionBar
         (activity as MainActivity).enableMenus()
-        if (viewModel.registro.value == 1) viewModel.resetValues()
+        saveDatesUserViewModel()
         supportActionBar?.show()
     }
 
@@ -111,7 +133,7 @@ class Register : Fragment() {
                         // guardar los datos en la DDBB
                         saveDatesUserDataBase()
                         // modificar el estado del registro a 1 para que se haga reset
-                        viewModel.setEstadoRegistro(1)
+
                         // go to login fragment
                         val action = RegisterDirections.actionRegisterToLogin()
                         NavHostFragment.findNavController(this).navigate(action)
@@ -124,6 +146,17 @@ class Register : Fragment() {
             // [END create_user_with_email]
         } else {
             Toast.makeText(activity, "Passwords not equals .", Toast.LENGTH_SHORT).show()
+        }
+    }
+    private fun restaurarDatos(){
+        if (viewModel.estadoRegistro.value == 1){
+            if (viewModel.nom.value != "") binding.editTextName.setText(viewModel.nom.value)
+            if (viewModel.edat.value != "") binding.editTextEdat.setText(viewModel.edat.value)
+            if (viewModel.sexe.value != null) binding.radioGroupRegistre.check(viewModel.sexe.value!!)
+            if (viewModel.ciutat.value != "") binding.editTextCiutat.setText(viewModel.ciutat.value)
+            if(viewModel.email.value != "") binding.editTextEmailRegister.setText(viewModel.email.value)
+            if (viewModel.password.value != "" ) binding.editTextPassword.setText(viewModel.password.value)
+            if (viewModel.password2.value != "") binding.editTextPassword2.setText(viewModel.password2.value)
         }
     }
 
