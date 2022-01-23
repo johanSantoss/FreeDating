@@ -80,7 +80,12 @@ class UserFragment : Fragment() {
         database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
         // cargar los datos del usuario
-        cargarDatosUsuario()
+
+        if (viewModel.estado.value == 1 ) {
+            restaurarDatos()
+        } else {
+            cargarDatosUsuario()
+        }
 
 //        // abrir una imagen por defecto
 //        val pathReference = storageRef.child( "imagenes/imageProfile.jpeg")
@@ -110,6 +115,9 @@ class UserFragment : Fragment() {
                 chooseImageGallery();
             }
         }
+
+
+
         return binding.root
     }
 
@@ -186,20 +194,27 @@ class UserFragment : Fragment() {
         carousel.addData(list)
     }
 
-    class DatosUsuari {
-        val nom: String
-        val edat: String
-        val sexe: String
-        val ciutat: String
-        val email: String
+    private fun restaurarDatos(){
+        if (viewModel.nom.value != "") binding.editTextNomUser.setText(viewModel.nom.value)
+        if (viewModel.edat.value != "") binding.editTextEdatUser.setText(viewModel.edat.value)
+        if (viewModel.sexe.value != "") binding.editTextSexeUser.setText(viewModel.sexe.value)
+        if (viewModel.ciutat.value != "") binding.editTextCiutatUser.setText(viewModel.ciutat.value)
+        if(viewModel.email.value != "") binding.editTextMailUser.setText(viewModel.email.value)
+    }
 
-        constructor() {
-            this.nom = ""
-            this.edat = ""
-            this.sexe = ""
-            this.ciutat = ""
-            this.email = ""
-        }
+    class DatosUsuari {
+        val nom: String = ""
+        val edat: String = ""
+        val sexe: String = ""
+        val ciutat: String = ""
+        val email: String = ""
+//        constructor() {
+//            this.nom = ""
+//            this.edat = ""
+//            this.sexe = ""
+//            this.ciutat = ""
+//            this.email = ""
+//        }
     }
 
     private fun cargarDatosUsuario(){
@@ -211,38 +226,29 @@ class UserFragment : Fragment() {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 val value = snapshot.getValue<DatosUsuari>()
-//                val user = DatosUsuari(value?.nom?:"",value?.edat?:"", value?.sexe?:"", value?.ciutat?:"", value?.email?:"")
-//                binding.editTextNomUser.setText(user.nom)
-//                binding.editTextEdatUser.setText(user.edat)
-//                binding.editTextSexeUser.setText(user.sexe)
-//                binding.editTextCiutatUser.setText(user.ciutat)
-//                binding.editTextMailUser.setText(user.email)
                 binding.editTextNomUser.setText(value?.nom?:"")
                 binding.editTextEdatUser.setText(value?.edat?:"")
                 binding.editTextSexeUser.setText(value?.sexe?:"")
                 binding.editTextCiutatUser.setText(value?.ciutat?:"")
                 binding.editTextMailUser.setText(value?.email?:"")
-
-                //btModifica.isEnabled = true
+                saveDatesUserViewModel()
             }
-
             override fun onCancelled(error: DatabaseError) {
-
                 binding.editTextNomUser.setText("Error al cargar los datos")
                 binding.editTextEdatUser.setText("Error al cargar los datos")
                 binding.editTextSexeUser.setText("Error al cargar los datos")
                 binding.editTextCiutatUser.setText("Error al cargar los datos")
                 binding.editTextMailUser.setText("Error al cargar los datos")
-                //btModifica.isEnabled = true
             }
         })
-
-
-//        if (auth.currentUser?.uid == null){
-//            // setear campos con estado "sin definir"
-//        } else {
-//            // setear campos con datos user
-//        }
     }
 
+    private fun saveDatesUserViewModel(){
+        viewModel.setNom(binding.editTextNomUser.text.toString().trim())
+        viewModel.setEdatUser(binding.editTextEdatUser.text.toString().trim())
+        viewModel.setSexeUser(binding.editTextSexeUser.text.toString().trim())
+        viewModel.setCiutatUser(binding.editTextCiutatUser.text.toString().trim())
+        viewModel.setEmail(binding.editTextMailUser.text.toString().trim())
+        viewModel.setEstado(1)
+    }
 }

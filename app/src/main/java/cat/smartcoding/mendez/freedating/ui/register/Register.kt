@@ -149,15 +149,13 @@ class Register : Fragment() {
         }
     }
     private fun restaurarDatos(){
-        if (viewModel.estadoRegistro.value == 1){
-            if (viewModel.nom.value != "") binding.editTextName.setText(viewModel.nom.value)
-            if (viewModel.edat.value != "") binding.editTextEdat.setText(viewModel.edat.value)
-            if (viewModel.sexe.value != null) binding.radioGroupRegistre.check(viewModel.sexe.value!!)
-            if (viewModel.ciutat.value != "") binding.editTextCiutat.setText(viewModel.ciutat.value)
-            if(viewModel.email.value != "") binding.editTextEmailRegister.setText(viewModel.email.value)
-            if (viewModel.password.value != "" ) binding.editTextPassword.setText(viewModel.password.value)
-            if (viewModel.password2.value != "") binding.editTextPassword2.setText(viewModel.password2.value)
-        }
+        if (viewModel.nom.value != "") binding.editTextName.setText(viewModel.nom.value)
+        if (viewModel.edat.value != "") binding.editTextEdat.setText(viewModel.edat.value)
+        if (viewModel.sexe.value != null) binding.radioGroupRegistre.check(viewModel.sexe.value!!)
+        if (viewModel.ciutat.value != "") binding.editTextCiutat.setText(viewModel.ciutat.value)
+        if(viewModel.email.value != "") binding.editTextEmailRegister.setText(viewModel.email.value)
+        if (viewModel.password.value != "" ) binding.editTextPassword.setText(viewModel.password.value)
+        if (viewModel.password2.value != "") binding.editTextPassword2.setText(viewModel.password2.value)
     }
 
     private fun clearDates(){
