@@ -36,6 +36,7 @@ import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import org.imaginativeworld.whynotimagecarousel.OnItemClickListener
 import java.io.ByteArrayOutputStream
+import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -46,6 +47,7 @@ class UserFragment : Fragment() {
     private val list = mutableListOf<CarouselItem>()
     private lateinit var carousel : ImageCarousel
     private lateinit var database: FirebaseDatabase
+    private lateinit var bitmaps: Bitmap
 
     companion object {
         fun newInstance() = UserFragment()
@@ -143,33 +145,32 @@ class UserFragment : Fragment() {
         }
     }
 
-//    private fun upImageProfile(){
-//        val auth: FirebaseAuth = Firebase.auth
-//
-//        val bitmaps = binding.imgUserProfile.drawable.toBitmap(binding.imgUserProfile.width, binding.imgUserProfile.height)
-//        val outba = ByteArrayOutputStream()
-//        bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
-//        val dadesbytes = outba.toByteArray() //passa les dades a ByteArray
-//        val c: Calendar = Calendar.getInstance()
-//        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
-//        val strDate: String = sdf.format(c.getTime())
-//        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/"+ strDate)
-//        pathReferenceSubir.putBytes( dadesbytes )
-//        Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
-//    }
-//
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
-//            binding.imgUserProfile.setImageURI(data?.data)
-////            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
-////            binding.imgUserProfile.setImageBitmap(imgBitMap)
-//            upImageProfile()
-//        }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
-//            val imgBitMap : Bitmap?=data!!.getExtras()!!.get("data") as Bitmap?
-//            binding.imgUserProfile.setImageBitmap(imgBitMap)
-//            upImageProfile()
-//        }
-//    }
+    private fun upImageProfile(){
+        val auth: FirebaseAuth = Firebase.auth
+
+        val outba = ByteArrayOutputStream()
+        bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
+        val dadesbytes = outba.toByteArray() //passa les dades a ByteArray
+        val c: Calendar = Calendar.getInstance()
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss")
+        val strDate: String = sdf.format(c.getTime())
+        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/"+ strDate)
+        pathReferenceSubir.putBytes( dadesbytes )
+        val myRef = database.getReference("${auth.currentUser?.uid}/userDates/imgProfile")
+        myRef.setValue(strDate)
+        Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(requestCode == IMAGE_CHOOSE && resultCode == Activity.RESULT_OK){
+            val uri = data?.data
+            bitmaps = MediaStore.Images.Media.getBitmap(requireContext().contentResolver, uri)
+            upImageProfile()
+        }else if(requestCode == CAMERA_CHOOSE && resultCode == Activity.RESULT_OK){
+            bitmaps = data!!.extras!!.get("data") as Bitmap
+            upImageProfile()
+        }
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
