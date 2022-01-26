@@ -32,6 +32,7 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.ktx.storage
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import org.imaginativeworld.whynotimagecarousel.OnItemClickListener
@@ -39,6 +40,8 @@ import java.io.ByteArrayOutputStream
 import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
+import com.google.firebase.storage.ktx.component1
+import com.google.firebase.storage.ktx.component2
 
 class UserFragment : Fragment() {
 
@@ -48,6 +51,7 @@ class UserFragment : Fragment() {
     private lateinit var carousel : ImageCarousel
     private lateinit var database: FirebaseDatabase
     private lateinit var bitmaps: Bitmap
+    val auth: FirebaseAuth = Firebase.auth
 
     companion object {
         fun newInstance() = UserFragment()
@@ -101,8 +105,9 @@ class UserFragment : Fragment() {
         // añadir imagen al viewModel
 
         binding.btnCamera.setOnClickListener {
-            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
+//            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
+            pruebaListaImg()
         }
 
         binding.btnGallery.setOnClickListener {
@@ -146,7 +151,6 @@ class UserFragment : Fragment() {
     }
 
     private fun upImageProfile(){
-        val auth: FirebaseAuth = Firebase.auth
 
         val outba = ByteArrayOutputStream()
         bitmaps.compress(Bitmap.CompressFormat.JPEG, 50, outba)
@@ -177,6 +181,35 @@ class UserFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         // TODO: Use the ViewModel
     }
+
+    fun pruebaListaImg(){
+        //val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
+        val path = "${auth.currentUser?.uid}/imageProfile"
+        Log.d("Path comosea", path)
+        val listRef = storageRef.child(path)
+
+// You'll need to import com.google.firebase.storage.ktx.component1 and
+// com.google.firebase.storage.ktx.component2
+        listRef.listAll()
+            .addOnSuccessListener { (items, prefixes) ->
+                prefixes.forEach { prefix ->
+                    // All the prefixes under listRef.
+                    // You may call listAll() recursively on them.
+                    //Log.d("Lista path:", prefix.path)
+                }
+
+                items.forEach { item ->
+                    // All the items under listRef.
+                    Log.d("Lista item path:", item.path)
+                }
+            }
+            .addOnFailureListener {
+                // Uh-oh, an error occurred!
+                Log.d("Error","${it.message}")
+            }
+
+    }
+
     private fun cargarCarousel(){
         carousel = binding.carousel1
         list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/02/08/noticias/1612786479_151283_1612786596_portada_normal.jpg", "primera imagen"))

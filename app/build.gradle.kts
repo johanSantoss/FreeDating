@@ -88,7 +88,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:21.0.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.0.0")
     implementation("com.google.firebase:firebase-database-ktx:20.0.3")
-    // Tests
+//    implementation ("com.google.firebase.storage.ktx.component1")
+//    implementation ("com.google.firebase.storage.ktx.component2")
+            // Tests
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")

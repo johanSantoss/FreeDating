@@ -38,7 +38,7 @@ class ProfilesRecyclerViewAdapter(
 
     inner class ViewHolder(binding: ProfilesFragmentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
+        val idView: TextView = binding.edad
         val contentView: TextView = binding.content
 
         override fun toString(): String {
