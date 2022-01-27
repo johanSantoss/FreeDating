@@ -2,9 +2,11 @@ package cat.smartcoding.mendez.freedating.ui.user
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -15,6 +17,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.browser.customtabs.CustomTabsClient.getPackageName
 import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import cat.smartcoding.mendez.freedating.MainActivity
@@ -42,6 +45,16 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
+import okio.Utf8.size
+import java.nio.file.Files.size
+import android.graphics.drawable.Drawable
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
+
+
+
+
+
+
 
 class UserFragment : Fragment() {
 
@@ -205,7 +218,13 @@ class UserFragment : Fragment() {
                     val ruta = pathServer + item.path
                     Log.d("Lista item path:", ruta)
                     varGlobal = ruta
-                    cargarCarousel(varGlobal)
+
+                    val imageResource = resources.getIdentifier(varGlobal, null, "prueba1")
+
+                    val res = resources.getDrawable(imageResource)
+                    val res2 = resources.getDrawable(imageResource)
+
+                    cargarCarousel(varGlobal, res)
 
                 }
             }
@@ -216,23 +235,15 @@ class UserFragment : Fragment() {
 
     }
 
-    private fun cargarCarousel(ruta : String){
+    private fun cargarCarousel(ruta : String, img : Drawable){
         carousel = binding.carousel1
         list.add(CarouselItem(ruta, "primeraprimera imagen"))
+        list.add(CarouselItem(img, "primeraprimera imagen"))
 //        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/02/08/noticias/1612786479_151283_1612786596_portada_normal.jpg", "primera imagen"))
 //        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/05/18/noticias/1621331371_078391_1621331484_noticia_normal.jpg", "segunda imagen"))
 //        list.add(CarouselItem("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/one-piece-1636660305.png?crop=1.00xw:0.365xh;0,0.153xh&resize=640:*", "tercera imagen"))
-        carousel.onItemClickListener = object : OnItemClickListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                Toast.makeText(requireContext(),"${carouselItem.caption}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onLongClick(position: Int, dataObject: CarouselItem) {
-                TODO("Not yet implemented")
-            }
-        }
-
         carousel.addData(list)
+        carousel.
     }
 
     private fun restaurarDatos(){

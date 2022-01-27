@@ -88,6 +88,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth:21.0.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.0.0")
     implementation("com.google.firebase:firebase-database-ktx:20.0.3")
+    implementation("androidx.test:core-ktx:1.4.0")
 //    implementation ("com.google.firebase.storage.ktx.component1")
 //    implementation ("com.google.firebase.storage.ktx.component2")
             // Tests
