@@ -109,7 +109,8 @@ class UserFragment : Fragment() {
         binding.btnCamera.setOnClickListener {
 //            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 //            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
-            pruebaListaImg()
+            listaImgUser()
+            cargarCarousel()
         }
 
         binding.btnGallery.setOnClickListener {
@@ -184,7 +185,7 @@ class UserFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    fun pruebaListaImg(){
+    fun listaImgUser(){
         //val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
         val path = "${auth.currentUser?.uid}/imageProfile"
         Log.d("Path comosea", path)
@@ -202,11 +203,10 @@ class UserFragment : Fragment() {
 
                 items.forEach { item ->
                     // All the items under listRef.
-                    val ruta = pathServer + item.path
-                    Log.d("Lista item path:", ruta)
-                    varGlobal = ruta
-                    cargarCarousel(varGlobal)
-
+                    item.downloadUrl.addOnSuccessListener {
+                        val ruta = it.toString()
+                        list.add(CarouselItem(ruta))
+                    }
                 }
             }
             .addOnFailureListener {
@@ -216,23 +216,9 @@ class UserFragment : Fragment() {
 
     }
 
-    private fun cargarCarousel(ruta : String){
+    private fun cargarCarousel(){
         carousel = binding.carousel1
-        list.add(CarouselItem(ruta, "primeraprimera imagen"))
-//        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/02/08/noticias/1612786479_151283_1612786596_portada_normal.jpg", "primera imagen"))
-//        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/05/18/noticias/1621331371_078391_1621331484_noticia_normal.jpg", "segunda imagen"))
-//        list.add(CarouselItem("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/one-piece-1636660305.png?crop=1.00xw:0.365xh;0,0.153xh&resize=640:*", "tercera imagen"))
-        carousel.onItemClickListener = object : OnItemClickListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                Toast.makeText(requireContext(),"${carouselItem.caption}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onLongClick(position: Int, dataObject: CarouselItem) {
-                TODO("Not yet implemented")
-            }
-        }
-
-        carousel.addData(list)
+         carousel.addData(list)
     }
 
     private fun restaurarDatos(){

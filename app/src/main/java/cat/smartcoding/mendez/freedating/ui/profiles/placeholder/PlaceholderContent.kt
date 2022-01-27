@@ -1,8 +1,11 @@
 package cat.smartcoding.mendez.freedating.ui.profiles.placeholder
 
 import android.util.Log
+import androidx.lifecycle.ViewModelProvider
 import cat.smartcoding.mendez.freedating.MainActivity
+import cat.smartcoding.mendez.freedating.ui.profiles.ProfilesRecyclerViewAdapter
 import cat.smartcoding.mendez.freedating.ui.user.UserFragment
+import cat.smartcoding.mendez.freedating.ui.user.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -32,19 +35,20 @@ object PlaceholderContent {
      */
     val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
 
-
-
     private val COUNT = 25
 
     var database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
+
     var name = ""
     var edad = ""
+    var imgProgile = ""
     var error = ""
 
 
     init {
         // Add some sample items.
+
         for (i in 1..COUNT) {
             addItem(createPlaceholderItem(i))
         }
@@ -52,6 +56,10 @@ object PlaceholderContent {
     class DatosProfile {
         val nom: String = ""
         val edat: String = ""
+        val sexe: String = ""
+        val ciutat: String = ""
+        val email: String = ""
+        val imgProfile = ""
     }
 
     private fun addItem(item: PlaceholderItem) {
@@ -61,17 +69,16 @@ object PlaceholderContent {
 
     private fun cargarDatosUsuario(){
         val auth: FirebaseAuth = Firebase.auth
-
-        val myRef = database.getReference("userDates")
+        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
         myRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                val value = snapshot.getValue<DatosProfile>()
-                Log.d("Datos Usuario: ", value?.nom?:"")
-                Log.d("Datos Usuario: ", value?.edat?:"")
+                val value: DatosProfile? = snapshot.getValue<DatosProfile>()
                 name = value?.nom?:""
                 edad = value?.edat?:""
+                imgProgile = value?.imgProfile?:""
+                Log.d("Datos Usuario1: ", name)
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -80,10 +87,10 @@ object PlaceholderContent {
     }
 
     private fun createPlaceholderItem(position: Int): PlaceholderItem {
-        cargarDatosUsuario()
-//        Log.d("Datos Usuario: ", name)
-//        Log.d("Datos Usuario: ", edad)
-        return PlaceholderItem(position.toString(), "Item $position", makeDetails(position))
+       Log.d("Datos Usuario2: ", name)
+//       Log.d("Datos Usuario: ", edad)
+//       cargarDatosUsuario()
+        return PlaceholderItem(position.toString(), name, makeDetails(position))
     }
 
     private fun makeDetails(position: Int): String {
