@@ -15,13 +15,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.drawable.toBitmap
 import androidx.databinding.DataBindingUtil
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
-import cat.smartcoding.mendez.freedating.databinding.FragmentLoginBinding
 import cat.smartcoding.mendez.freedating.databinding.UserFragmentBinding
-import cat.smartcoding.mendez.freedating.ui.Login.LoginViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -35,9 +32,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
-import org.imaginativeworld.whynotimagecarousel.OnItemClickListener
 import java.io.ByteArrayOutputStream
-import java.net.URI
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.storage.ktx.component1
@@ -47,24 +42,21 @@ class UserFragment : Fragment() {
 
     private lateinit var binding: UserFragmentBinding
     private lateinit var storageRef : StorageReference
-    private val list = mutableListOf<CarouselItem>()
     private lateinit var carousel : ImageCarousel
     private lateinit var database: FirebaseDatabase
     private lateinit var bitmaps: Bitmap
-    val auth: FirebaseAuth = Firebase.auth
-    val pathServer = "gs://freedating-9dbd7.appspot.com"
-    private lateinit var varGlobal: String
+    private lateinit var viewModel: UserViewModel
+    private var totalImage : Int? = null
+    private var contImage  : Int  = 0
 
     companion object {
         fun newInstance() = UserFragment()
         private val IMAGE_CHOOSE = 1000;
         private val PERMISSION_CODE = 1001;
         private  val CAMERA_CHOOSE = 1002;
-
-
+        private val PATH_SERVER = "gs://freedating-9dbd7.appspot.com"
+        private val AUTH : FirebaseAuth = Firebase.auth
     }
-
-    private lateinit var viewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,39 +69,25 @@ class UserFragment : Fragment() {
                 false
         )
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
-        //cargarCarousel()
 
-        //  Storage variables
-        val storage = FirebaseStorage.getInstance(pathServer)
+        //  conection to Storage variables
+        val storage = FirebaseStorage.getInstance(PATH_SERVER)
         storageRef = storage.reference
 
         // Conection to DataBase
-        // cambiar el link del Storage por el correcto, este no es valido --------------------------------------------------------------------------------------------------------------------
         database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
         // cargar los datos del usuario
-
         if (viewModel.estado.value == 1 ) {
             restaurarDatos()
         } else {
             cargarDatosUsuario()
         }
 
-//        // abrir una imagen por defecto
-//        val pathReference = storageRef.child( "imagenes/imageProfile.jpeg")
-//        val im = pathReference.getBytes(50000)
-//        // listener para setear el ImageView
-//        im.addOnSuccessListener {
-//            //llegim la imatge que estarà en "it"
-//            var bitmap = BitmapFactory.decodeByteArray(it, 0, it.size)
-//            binding.imgUserProfile.setImageBitmap( bitmap ) //posa el bitmap a la imatge
-//        }
-        // añadir imagen al viewModel
 
         binding.btnCamera.setOnClickListener {
-//            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-//            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
-            pruebaListaImg()
+            val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            startActivityForResult(takePhotoIntent, CAMERA_CHOOSE)
         }
 
         binding.btnGallery.setOnClickListener {
@@ -160,11 +138,16 @@ class UserFragment : Fragment() {
         val c: Calendar = Calendar.getInstance()
         val sdf = SimpleDateFormat("yyyyMMddHHmmss")
         val strDate: String = sdf.format(c.getTime())
-        val pathReferenceSubir = storageRef.child( "${auth.currentUser?.uid}/imageProfile/"+ strDate)
+        val pathReferenceSubir = storageRef.child( "AllUsers/${AUTH.currentUser?.uid}/imageProfile/"+ strDate)
         pathReferenceSubir.putBytes( dadesbytes )
-        val myRef = database.getReference("${auth.currentUser?.uid}/userDates/imgProfile")
+        val myRef = database.getReference("AllUsers/${AUTH.currentUser?.uid}/userDates/imgProfile")
         myRef.setValue(strDate)
         Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
+
+        // poner pantallita emergente de carga
+        viewModel.cleanImageCarousel()
+        descargarImagenesUser()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -184,14 +167,12 @@ class UserFragment : Fragment() {
         // TODO: Use the ViewModel
     }
 
-    fun pruebaListaImg(){
-        //val storage = FirebaseStorage.getInstance("gs://freedating-9dbd7.appspot.com/")
-        val path = "${auth.currentUser?.uid}/imageProfile"
-        Log.d("Path comosea", path)
+    fun descargarImagenesUser(){
+        val path = "AllUsers/${AUTH.currentUser?.uid}/imageProfile"
         val listRef = storageRef.child(path)
 
-// You'll need to import com.google.firebase.storage.ktx.component1 and
-// com.google.firebase.storage.ktx.component2
+        // You'll need to import com.google.firebase.storage.ktx.component1 and
+        // com.google.firebase.storage.ktx.component2
         listRef.listAll()
             .addOnSuccessListener { (items, prefixes) ->
                 prefixes.forEach { prefix ->
@@ -199,15 +180,17 @@ class UserFragment : Fragment() {
                     // You may call listAll() recursively on them.
                     Log.d("Lista path:", prefix.path)
                 }
-
+                totalImage = items.size
                 items.forEach { item ->
                     // All the items under listRef.
-                    val ruta = pathServer + item.path
-                    Log.d("Lista item path:", ruta)
-                    varGlobal = ruta
-                    cargarCarousel(varGlobal)
+                    item.downloadUrl.addOnSuccessListener {
+                        viewModel.addImageCarousel(it.toString())
+                        contImage.inc()
+                        if (contImage == totalImage) cargarCarousel(viewModel.carouselList.value!!)
+                    }
 
                 }
+
             }
             .addOnFailureListener {
                 // Uh-oh, an error occurred!
@@ -216,23 +199,13 @@ class UserFragment : Fragment() {
 
     }
 
-    private fun cargarCarousel(ruta : String){
+    private fun cargarCarousel(listaImagenes : MutableList<String>){
         carousel = binding.carousel1
-        list.add(CarouselItem(ruta, "primeraprimera imagen"))
-//        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/02/08/noticias/1612786479_151283_1612786596_portada_normal.jpg", "primera imagen"))
-//        list.add(CarouselItem("https://as01.epimg.net/meristation/imagenes/2021/05/18/noticias/1621331371_078391_1621331484_noticia_normal.jpg", "segunda imagen"))
-//        list.add(CarouselItem("https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/one-piece-1636660305.png?crop=1.00xw:0.365xh;0,0.153xh&resize=640:*", "tercera imagen"))
-        carousel.onItemClickListener = object : OnItemClickListener {
-            override fun onClick(position: Int, carouselItem: CarouselItem) {
-                Toast.makeText(requireContext(),"${carouselItem.caption}", Toast.LENGTH_SHORT).show()
-            }
-
-            override fun onLongClick(position: Int, dataObject: CarouselItem) {
-                TODO("Not yet implemented")
-            }
+        val dades = mutableListOf<CarouselItem>()
+        listaImagenes.forEach {
+            dades.add(CarouselItem(it))
         }
-
-        carousel.addData(list)
+        carousel.addData(dades)
     }
 
     private fun restaurarDatos(){
@@ -241,6 +214,11 @@ class UserFragment : Fragment() {
         if (viewModel.sexe.value != "") binding.editTextSexeUser.setText(viewModel.sexe.value)
         if (viewModel.ciutat.value != "") binding.editTextCiutatUser.setText(viewModel.ciutat.value)
         if(viewModel.email.value != "") binding.editTextMailUser.setText(viewModel.email.value)
+        if (!viewModel.carouselList.value!!.isEmpty() ) {
+            cargarCarousel(viewModel.carouselList.value!!)
+        } else {
+            Toast.makeText(requireContext(),"No hay imagenes!", Toast.LENGTH_SHORT).show()
+        }
     }
 
     class DatosUsuari {
@@ -249,19 +227,12 @@ class UserFragment : Fragment() {
         val sexe: String = ""
         val ciutat: String = ""
         val email: String = ""
-//        constructor() {
-//            this.nom = ""
-//            this.edat = ""
-//            this.sexe = ""
-//            this.ciutat = ""
-//            this.email = ""
-//        }
     }
 
     private fun cargarDatosUsuario(){
         val auth = (activity as MainActivity).getAuth()
 
-        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
+        val myRef = database.getReference("AllUsers/${auth.currentUser?.uid}/userDates")
         myRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 // This method is called once with the initial value and again
@@ -290,6 +261,7 @@ class UserFragment : Fragment() {
         viewModel.setSexeUser(binding.editTextSexeUser.text.toString().trim())
         viewModel.setCiutatUser(binding.editTextCiutatUser.text.toString().trim())
         viewModel.setEmail(binding.editTextMailUser.text.toString().trim())
+        descargarImagenesUser()
         viewModel.setEstado(1)
     }
 }

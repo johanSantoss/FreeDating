@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.imaginativeworld.whynotimagecarousel.CarouselItem
 
 class UserViewModel : ViewModel() {
     private val _imgProfile = MutableLiveData<Bitmap>()
@@ -11,6 +12,17 @@ class UserViewModel : ViewModel() {
     fun setEmail (imgProfile : Bitmap){
         _imgProfile.value = imgProfile
     }
+
+    // lista de imagenes
+    private val _carouselList = MutableLiveData<MutableList<String>>()
+    val carouselList: LiveData<MutableList<String>> get() = _carouselList
+    fun addImageCarousel (image : String){
+        _carouselList.value!!.add(image)
+    }
+    fun cleanImageCarousel (){
+        _carouselList.value?.clear()
+    }
+
 
     // nom
     private val _nom = MutableLiveData<String>("")
