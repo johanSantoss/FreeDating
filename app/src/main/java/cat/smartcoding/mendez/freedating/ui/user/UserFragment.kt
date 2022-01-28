@@ -48,6 +48,7 @@ class UserFragment : Fragment() {
     private lateinit var viewModel: UserViewModel
     private var totalImage : Int = -1
     private var contImage  : Int  = 0
+    private val list = mutableListOf<CarouselItem>()
 
     companion object {
         fun newInstance() = UserFragment()
@@ -146,7 +147,7 @@ class UserFragment : Fragment() {
 
         // poner pantallita emergente de carga
         totalImage = -1
-        viewModel.cleanImageCarousel()
+        list.clear()
         descargarImagenesUser()
 
     }
@@ -185,9 +186,9 @@ class UserFragment : Fragment() {
                 items.forEach { item ->
                     // All the items under listRef.
                     item.downloadUrl.addOnSuccessListener {
-                        viewModel.addImageCarousel(it.toString())
+                        list.add(CarouselItem(it.toString()))
                         contImage.inc()
-                        if (contImage > totalImage) cargarCarousel(viewModel.carouselList.value!!)
+                        if (contImage > totalImage) cargarCarousel()
                     }
 
                 }
@@ -200,13 +201,9 @@ class UserFragment : Fragment() {
 
     }
 
-    private fun cargarCarousel(listaImagenes : MutableList<String>){
+    private fun cargarCarousel(){
         carousel = binding.carousel1
-        val dades = mutableListOf<CarouselItem>()
-        listaImagenes.forEach {
-            dades.add(CarouselItem(it))
-        }
-        carousel.addData(dades)
+        carousel.addData(list)
     }
 
     private fun restaurarDatos(){
@@ -215,10 +212,9 @@ class UserFragment : Fragment() {
         if (viewModel.sexe.value != "") binding.editTextSexeUser.setText(viewModel.sexe.value)
         if (viewModel.ciutat.value != "") binding.editTextCiutatUser.setText(viewModel.ciutat.value)
         if(viewModel.email.value != "") binding.editTextMailUser.setText(viewModel.email.value)
-        if (!viewModel.carouselList.value!!.isEmpty() ) {
-            cargarCarousel(viewModel.carouselList.value!!)
-        } else {
-            Toast.makeText(requireContext(),"No hay imagenes!", Toast.LENGTH_SHORT).show()
+        if (list.isEmpty() ) {
+            descargarImagenesUser()
+            if (list.isEmpty() ) Toast.makeText(requireContext(),"No hay imagenes!", Toast.LENGTH_SHORT).show()
         }
     }
 

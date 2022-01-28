@@ -13,16 +13,6 @@ class UserViewModel : ViewModel() {
         _imgProfile.value = imgProfile
     }
 
-    // lista de imagenes
-    private val _carouselList = MutableLiveData<MutableList<String>>()
-    val carouselList: LiveData<MutableList<String>> get() = _carouselList
-    fun addImageCarousel (image : String){
-        _carouselList.value!!.add(image)
-    }
-    fun cleanImageCarousel (){
-        _carouselList.value?.clear()
-    }
-
 
     // nom
     private val _nom = MutableLiveData<String>("")
