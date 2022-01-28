@@ -46,7 +46,7 @@ class UserFragment : Fragment() {
     private lateinit var database: FirebaseDatabase
     private lateinit var bitmaps: Bitmap
     private lateinit var viewModel: UserViewModel
-    private var totalImage : Int? = null
+    private var totalImage : Int = -1
     private var contImage  : Int  = 0
 
     companion object {
@@ -145,6 +145,7 @@ class UserFragment : Fragment() {
         Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
 
         // poner pantallita emergente de carga
+        totalImage = -1
         viewModel.cleanImageCarousel()
         descargarImagenesUser()
 
@@ -180,13 +181,13 @@ class UserFragment : Fragment() {
                     // You may call listAll() recursively on them.
                     Log.d("Lista path:", prefix.path)
                 }
-                totalImage = items.size
+                if (totalImage == -1 ) totalImage = items.size
                 items.forEach { item ->
                     // All the items under listRef.
                     item.downloadUrl.addOnSuccessListener {
                         viewModel.addImageCarousel(it.toString())
                         contImage.inc()
-                        if (contImage == totalImage) cargarCarousel(viewModel.carouselList.value!!)
+                        if (contImage > totalImage) cargarCarousel(viewModel.carouselList.value!!)
                     }
 
                 }

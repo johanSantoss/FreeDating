@@ -55,34 +55,22 @@ class Register : Fragment() {
         binding.btnNewRegister.setOnClickListener {
 
             if (binding.editTextName.text == null ) {
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta nombre!", Toast.LENGTH_SHORT).show()
             } else if (binding.editTextEdat.text == null) {
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta la edat!", Toast.LENGTH_SHORT).show()
             } else if (binding.radioGroupRegistre.checkedRadioButtonId == null ){
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta sexo!", Toast.LENGTH_SHORT).show()
             } else if (binding.editTextCiutat.text == null ){
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta la ciudad!", Toast.LENGTH_SHORT).show()
             } else if (binding.editTextEmailRegister.text == null){
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta la cuidad!", Toast.LENGTH_SHORT).show()
             } else if (binding.editTextPassword.text == null ){
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
-                saveDatesUserViewModel()
-                viewModel.setEstadoRegistro(1)
+                Toast.makeText(activity, "Falta introducir la contraseña", Toast.LENGTH_SHORT).show()
             } else if (binding.editTextPassword2.text == null ){
-                Toast.makeText(activity, "Faltan datos por el nombre!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Falta repetir la contraseña", Toast.LENGTH_SHORT).show()
+            } else {
                 saveDatesUserViewModel()
                 viewModel.setEstadoRegistro(1)
-            } else {
                 createAccount(viewModel.email.value.toString(), viewModel.password.value.toString(), viewModel.password2.value.toString())
             }
         }
@@ -132,8 +120,6 @@ class Register : Fragment() {
                         Toast.makeText(activity, "Register success!", Toast.LENGTH_SHORT).show()
                         // guardar los datos en la DDBB
                         saveDatesUserDataBase()
-                        // modificar el estado del registro a 1 para que se haga reset
-
                         // go to login fragment
                         val action = RegisterDirections.actionRegisterToLogin()
                         NavHostFragment.findNavController(this).navigate(action)
@@ -206,7 +192,7 @@ class Register : Fragment() {
         // se genera una clase de USER con todos los datos del usuario
         val user = DatosUsuari(viewModel.nom.value.toString(), viewModel.edat.value.toString(),  sexe, viewModel.ciutat.value.toString(), auth.currentUser?.email.toString())
         // Se genera el acceso a la DDBB
-        val myRef = database.getReference("${auth.currentUser?.uid}/userDates")
+        val myRef = database.getReference("AllUsers/${auth.currentUser?.uid}/userDates")
         // Se settean y suben los datos del nuevo usuario
         myRef.setValue(user)
     }
