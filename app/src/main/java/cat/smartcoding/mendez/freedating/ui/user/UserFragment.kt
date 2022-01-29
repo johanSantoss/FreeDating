@@ -30,13 +30,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
-import org.imaginativeworld.whynotimagecarousel.CarouselItem
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import com.google.firebase.storage.ktx.component1
 import com.google.firebase.storage.ktx.component2
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class UserFragment : Fragment() {
 
@@ -84,7 +84,6 @@ class UserFragment : Fragment() {
         } else {
             cargarDatosUsuario()
         }
-
 
         binding.btnCamera.setOnClickListener {
             val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -140,15 +139,21 @@ class UserFragment : Fragment() {
         val sdf = SimpleDateFormat("yyyyMMddHHmmss")
         val strDate: String = sdf.format(c.getTime())
         val pathReferenceSubir = storageRef.child( "AllUsers/${AUTH.currentUser?.uid}/imageProfile/"+ strDate)
-        pathReferenceSubir.putBytes( dadesbytes )
-        val myRef = database.getReference("AllUsers/${AUTH.currentUser?.uid}/userDates/imgProfile")
-        myRef.setValue(strDate)
+        pathReferenceSubir.putBytes( dadesbytes ).addOnSuccessListener {
+            val myRef = database.getReference("AllUsers/${AUTH.currentUser?.uid}/userDates/imgProfile")
+            pathReferenceSubir.downloadUrl.addOnSuccessListener {
+                myRef.setValue(it.toString())
+            }
+        }
+
+
         Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
 
         // poner pantallita emergente de carga
         totalImage = -1
-        list.clear()
         descargarImagenesUser()
+
+
 
     }
 
@@ -187,8 +192,8 @@ class UserFragment : Fragment() {
                     // All the items under listRef.
                     item.downloadUrl.addOnSuccessListener {
                         list.add(CarouselItem(it.toString()))
-                        contImage.inc()
-                        if (contImage > totalImage) cargarCarousel()
+                        ++contImage
+                        if (contImage == totalImage) cargarCarousel()
                     }
 
                 }
