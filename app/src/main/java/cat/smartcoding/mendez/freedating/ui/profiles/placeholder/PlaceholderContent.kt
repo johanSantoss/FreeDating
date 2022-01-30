@@ -3,6 +3,7 @@ package cat.smartcoding.mendez.freedating.ui.profiles.placeholder
 import android.util.Log
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.ui.profiles.ProfilesRecyclerViewAdapter
 import cat.smartcoding.mendez.freedating.ui.user.UserFragment
@@ -15,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
-import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.util.*
 
 /**
@@ -42,18 +42,19 @@ object PlaceholderContent {
 
     var listUsers = arrayListOf<DatosProfile>()
     var error = ""
+    var edatMin = 0
+    var edatMax = 0
+    lateinit var rangoEdad : IntRange
+    var sexe = ""
+    var ciutat = ""
+    var distancia = 0
+
+
 
 
     init {
         // Add some sample items.
         cargarDatosUsuario()
-//        while (COUNT == 0){
-//            if(COUNT != 0){
-//                for (i in 0..(COUNT-1)) {
-//                    addItem(createPlaceholderItem(i))
-//                }
-//            }
-//        }
     }
     class DatosProfile {
         val nom: String = ""
@@ -80,24 +81,26 @@ object PlaceholderContent {
                     if(item.key != auth.currentUser?.uid){
                         item.children.forEach { valors ->
                             valors.getValue<DatosProfile>()?.let {
-                                listUsers.add(it)
-                                ++COUNT
-                                addItem(createPlaceholderItem(COUNT))
+                                rangoEdad = edatMin .. edatMax
+                                if (sexe == it.sexe || sexe == "Tots dos"){
+                                    if(ciutat == it.ciutat){
+                                        if(rangoEdad.contains(Integer.parseInt(it.edat))){
+                                            listUsers.add(it)
+                                            ++COUNT
+                                            if(COUNT >= 0){
+                                                addItem(createPlaceholderItem(COUNT))
+                                            }
+                                        }
+                                    }
+
+                                }
+
                             }
                         }
                     }
                 }
 
-                Log.d("VALUE2:" , listUsers[2].nom)
-//                for (i in 0..COUNT-1) {
-//                    addItem(createPlaceholderItem(i))
-//                }
-
-
-//                name = value?.nom?:""
-//                edad = value?.edat?:""
-//                imgProgile = value?.imgProfile?:""
-//                Log.d("Datos Usuario1: ", name)
+//                Log.d("VALUE2:" , listUsers[2].nom)
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")

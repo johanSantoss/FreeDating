@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.preference.PreferenceManager
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.ui.profiles.placeholder.PlaceholderContent
@@ -33,6 +34,12 @@ class ProfilesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.profiles_fragment_item_list, container, false)
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        PlaceholderContent.sexe = sharedPreferences.getString("sexe", "").toString()
+        PlaceholderContent.edatMin = Integer.parseInt(sharedPreferences.getString("yearsMin", "").toString())
+        PlaceholderContent.edatMax = Integer.parseInt(sharedPreferences.getString("yearsMax", "").toString())
+        PlaceholderContent.ciutat = sharedPreferences.getString("cuidad", "").toString()
 
         // Set the adapter
         if (view is RecyclerView) {

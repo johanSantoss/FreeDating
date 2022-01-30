@@ -9,6 +9,7 @@
             app:title="Sexe"
             app:useSimpleSummaryProvider="true" />
 
+
         <ListPreference
             app:defaultValue="18"
             app:entries="@array/listaYears"
@@ -37,14 +38,6 @@
             app:title="Cuidad"
             app:useSimpleSummaryProvider="true" />
 
-
-        <ListPreference
-            app:defaultValue="1"
-            app:entries="@array/listaDistancia"
-            app:entryValues="@array/listaDistancia"
-            app:key="distance"
-            app:title="Distance"
-            app:useSimpleSummaryProvider="true" />
 
     </PreferenceCategory>
 

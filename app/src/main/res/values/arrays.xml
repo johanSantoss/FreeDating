@@ -51,6 +51,7 @@
     <string-array name="listaSexe">
         <item>Dona</item>
         <item>Home</item>
+        <item>Tots dos</item>
     </string-array>
 
     <string-array name="listaCuidades">
@@ -60,6 +61,7 @@
         <item>Sant Cugat</item>
         <item>Badalona</item>
         <item>Catelldefells</item>
+        <item>Madrid</item>
     </string-array>
 
     <string-array name="listaDistancia">
