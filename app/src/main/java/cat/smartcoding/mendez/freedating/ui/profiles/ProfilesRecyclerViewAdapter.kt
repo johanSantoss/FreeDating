@@ -1,14 +1,15 @@
 package cat.smartcoding.mendez.freedating.ui.profiles
 
-import androidx.recyclerview.widget.RecyclerView
+import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import cat.smartcoding.mendez.freedating.R
+import androidx.recyclerview.widget.RecyclerView
 import cat.smartcoding.mendez.freedating.databinding.ProfilesFragmentItemBinding
-
 import cat.smartcoding.mendez.freedating.ui.profiles.placeholder.PlaceholderContent.PlaceholderItem
+import com.bumptech.glide.Glide
 
 /**
  * [RecyclerView.Adapter] that can display a [PlaceholderItem].
@@ -18,7 +19,10 @@ class ProfilesRecyclerViewAdapter(
     private val values: List<PlaceholderItem>
 ) : RecyclerView.Adapter<ProfilesRecyclerViewAdapter.ViewHolder>() {
 
+    var mContext: Context? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        mContext = parent.context
 
         return ViewHolder(ProfilesFragmentItemBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -30,19 +34,27 @@ class ProfilesRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
+        mContext?.let {
+            Glide.with(it)
+                .load(Uri.parse(item.img))
+                .fitCenter()
+                .centerCrop()
+                .into(holder.imgView)
+        }
+        holder.edadView.text = item.edat
+        holder.nameView.text = item.content
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: ProfilesFragmentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.edad
-        val contentView: TextView = binding.content
+        val edadView: TextView = binding.edad
+        val nameView: TextView = binding.content
+        val imgView: ImageView = binding.imageView8
 
         override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+            return super.toString() + " '" + nameView.text + "'"
         }
 
     }

@@ -36,23 +36,24 @@ object PlaceholderContent {
      */
     val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
 
-    private var COUNT = 0
+    private var COUNT = -1
 
     var database = FirebaseDatabase.getInstance("https://freedating-9dbd7-default-rtdb.europe-west1.firebasedatabase.app/")
 
-
-    var name = ""
-    var edad = ""
-    var imgProgile = ""
     var listUsers = arrayListOf<DatosProfile>()
     var error = ""
 
 
     init {
         // Add some sample items.
-        for (i in 1..COUNT) {
-            addItem(createPlaceholderItem(i))
-        }
+        cargarDatosUsuario()
+//        while (COUNT == 0){
+//            if(COUNT != 0){
+//                for (i in 0..(COUNT-1)) {
+//                    addItem(createPlaceholderItem(i))
+//                }
+//            }
+//        }
     }
     class DatosProfile {
         val nom: String = ""
@@ -65,7 +66,7 @@ object PlaceholderContent {
 
     private fun addItem(item: PlaceholderItem) {
         ITEMS.add(item)
-        ITEM_MAP.put(item.id, item)
+        ITEM_MAP.put(item.edat, item)
     }
 
     private fun cargarDatosUsuario(){
@@ -76,13 +77,21 @@ object PlaceholderContent {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
                 snapshot.children.forEach { item ->
-                    item.children.forEach { valors ->
-                        valors.getValue<DatosProfile>()?.let { listUsers.add(it) }
+                    if(item.key != auth.currentUser?.uid){
+                        item.children.forEach { valors ->
+                            valors.getValue<DatosProfile>()?.let {
+                                listUsers.add(it)
+                                ++COUNT
+                                addItem(createPlaceholderItem(COUNT))
+                            }
+                        }
                     }
                 }
-                COUNT = listUsers.size
 
-                    Log.d("VALUE2:" , listUsers[2].nom)
+                Log.d("VALUE2:" , listUsers[2].nom)
+//                for (i in 0..COUNT-1) {
+//                    addItem(createPlaceholderItem(i))
+//                }
 
 
 //                name = value?.nom?:""
@@ -97,10 +106,9 @@ object PlaceholderContent {
     }
 
     private fun createPlaceholderItem(position: Int): PlaceholderItem {
-       Log.d("Datos Usuario2: ", name)
+       Log.d("Datos Usuario2: ", "listUsers[position].nom")
 //       Log.d("Datos Usuario: ", edad)
-       cargarDatosUsuario()
-        return PlaceholderItem(position.toString(), name, makeDetails(position))
+        return PlaceholderItem(listUsers[position].edat, listUsers[position].nom, listUsers[position].imgProfile)
     }
 
     private fun makeDetails(position: Int): String {
@@ -115,7 +123,7 @@ object PlaceholderContent {
     /**
      * A placeholder item representing a piece of content.
      */
-    data class PlaceholderItem(val id: String, val content: String, val details: String) {
+    data class PlaceholderItem(val edat: String, val content: String, val img: String) {
         override fun toString(): String = content
     }
 }
