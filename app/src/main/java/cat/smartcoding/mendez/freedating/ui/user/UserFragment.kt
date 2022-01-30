@@ -6,16 +6,17 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import cat.smartcoding.mendez.freedating.MainActivity
 import cat.smartcoding.mendez.freedating.R
 import cat.smartcoding.mendez.freedating.databinding.UserFragmentBinding
@@ -29,14 +30,13 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.component1
+import com.google.firebase.storage.ktx.component2
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel
+import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
-import com.google.firebase.storage.ktx.component1
-import com.google.firebase.storage.ktx.component2
-import org.imaginativeworld.whynotimagecarousel.model.CarouselItem
 
 class UserFragment : Fragment() {
 
@@ -84,6 +84,9 @@ class UserFragment : Fragment() {
         } else {
             cargarDatosUsuario()
         }
+        carousel = binding.carousel1
+
+        descargarImagenesUser()
 
         binding.btnCamera.setOnClickListener {
             val takePhotoIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -143,18 +146,15 @@ class UserFragment : Fragment() {
             val myRef = database.getReference("AllUsers/${AUTH.currentUser?.uid}/userDates/imgProfile")
             pathReferenceSubir.downloadUrl.addOnSuccessListener {
                 myRef.setValue(it.toString())
+                totalImage = -1
+                contImage = 0
+                descargarImagenesUser()
+                list.clear()
             }
         }
 
 
         Toast.makeText(requireContext(),"Image Saved", Toast.LENGTH_SHORT).show()
-
-        // poner pantallita emergente de carga
-        totalImage = -1
-        descargarImagenesUser()
-
-
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -176,7 +176,7 @@ class UserFragment : Fragment() {
 
     fun descargarImagenesUser(){
         val path = "AllUsers/${AUTH.currentUser?.uid}/imageProfile"
-        val listRef = storageRef.child(path)
+        var listRef = storageRef.child(path)
 
         // You'll need to import com.google.firebase.storage.ktx.component1 and
         // com.google.firebase.storage.ktx.component2
@@ -195,9 +195,7 @@ class UserFragment : Fragment() {
                         ++contImage
                         if (contImage == totalImage) cargarCarousel()
                     }
-
                 }
-
             }
             .addOnFailureListener {
                 // Uh-oh, an error occurred!
@@ -207,8 +205,7 @@ class UserFragment : Fragment() {
     }
 
     private fun cargarCarousel(){
-        carousel = binding.carousel1
-        carousel.addData(list)
+        carousel.setData(list)
     }
 
     private fun restaurarDatos(){
@@ -218,7 +215,7 @@ class UserFragment : Fragment() {
         if (viewModel.ciutat.value != "") binding.editTextCiutatUser.setText(viewModel.ciutat.value)
         if(viewModel.email.value != "") binding.editTextMailUser.setText(viewModel.email.value)
         if (list.isEmpty() ) {
-            descargarImagenesUser()
+            //descargarImagenesUser()
             if (list.isEmpty() ) Toast.makeText(requireContext(),"No hay imagenes!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -263,7 +260,7 @@ class UserFragment : Fragment() {
         viewModel.setSexeUser(binding.editTextSexeUser.text.toString().trim())
         viewModel.setCiutatUser(binding.editTextCiutatUser.text.toString().trim())
         viewModel.setEmail(binding.editTextMailUser.text.toString().trim())
-        descargarImagenesUser()
+        //descargarImagenesUser()
         viewModel.setEstado(1)
     }
 }
