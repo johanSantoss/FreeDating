@@ -2,9 +2,11 @@
 
     <PreferenceCategory app:title="Person">
 
-        <EditTextPreference
-            app:key="keyName"
-            app:title="Name"
+        <ListPreference
+            app:entries="@array/listaSexe"
+            app:entryValues="@array/listaSexe"
+            app:key="sexe"
+            app:title="Sexe"
             app:useSimpleSummaryProvider="true" />
 
         <ListPreference
@@ -35,10 +37,6 @@
             app:title="Cuidad"
             app:useSimpleSummaryProvider="true" />
 
-        <SwitchPreferenceCompat
-            app:key="distanceMin"
-            app:title="Km de distancia mínimos"
-            app:summaryOn="Distancia superior a los km's indicados" />
 
         <ListPreference
             app:defaultValue="1"

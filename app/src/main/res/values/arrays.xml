@@ -48,6 +48,11 @@
         <item>60</item>
     </string-array>
 
+    <string-array name="listaSexe">
+        <item>Dona</item>
+        <item>Home</item>
+    </string-array>
+
     <string-array name="listaCuidades">
         <item>Barcelona</item>
         <item>Terrassa</item>
