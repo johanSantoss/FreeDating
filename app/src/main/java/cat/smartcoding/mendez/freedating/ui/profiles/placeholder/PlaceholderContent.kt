@@ -101,6 +101,7 @@ object PlaceholderContent {
                 }
 
 //                Log.d("VALUE2:" , listUsers[2].nom)
+
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
